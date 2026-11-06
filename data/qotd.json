@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "timezone": "Europe/Berlin",
+    "identifiedOwnPollMessages": 13,
+    "inventoryCheckedOn": "2026-11-07",
+    "coverageNote": "Work in progress. 13 poll messages authored by the archive owner were located in the local group database. This is not a confirmed number of distinct QOTDs. Only independently verified questions appear below."
+  },
+  "questions": [
+    {
+      "id": "2026-11-07-pirated-content",
+      "date": "2026-11-07",
+      "category": "Technology & Culture",
+      "question": "Have you ever knowingly used pirated content or software?",
+      "description": "Select all that apply. Anonymous",
+      "anonymous": true,
+      "multipleChoice": true,
+      "participants": null,
+      "options": [
+        {"text": "Movies / TV shows / Streaming sites", "votes": null},
+        {"text": "Pirated / Cracked Software & Apps", "votes": null},
+        {"text": "Video games", "votes": null},
+        {"text": "Books / E-books / PDFs", "votes": null},
+        {"text": "Music / Audio", "votes": null},
+        {"text": "Others", "votes": null},
+        {"text": "Never (as far as I know)", "votes": null},
+        {"text": "Not sure (begin to question my self)", "votes": null}
+      ]
+    }
+  ]
+}
+
