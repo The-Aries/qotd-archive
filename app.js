@@ -86,7 +86,7 @@ function card(entry) {
         if (other !== card) other.open = false;
       }
     }
-    syncActiveNavigation();
+    syncActiveNavigation(card.open ? card.id : null);
   });
   const summary = element("summary", "question-summary");
   const heading = element("span", "question-title", questionTitle(entry.question));
@@ -168,10 +168,16 @@ function renderNavigation(filtered) {
     link.title = questionTitle(entry.question);
     link.append(element("span", "quick-date", entry.date));
     link.append(element("span", "quick-label", questionTitle(entry.question)));
-    link.addEventListener("click", () => {
+    link.addEventListener("click", event => {
+      event.preventDefault();
       const target = document.getElementById(entry.id);
-      if (target) target.open = true;
-      syncActiveNavigation();
+      if (target) {
+        target.open = true;
+        // An explicit jump avoids smooth-scroll and collapsing-card races.
+        target.scrollIntoView({behavior: "instant", block: "start"});
+        history.replaceState(null, "", "#" + entry.id);
+      }
+      syncActiveNavigation(entry.id);
     });
     items.push(link);
   }
@@ -179,23 +185,64 @@ function renderNavigation(filtered) {
   get("quick-empty").hidden = filtered.length > 0;
 }
 
-function syncActiveNavigation() {
-  const expanded = document.querySelector("details.question[open]");
-  for (const link of get("quick-links").querySelectorAll(".quick-link")) {
-    const active = Boolean(expanded && link.getAttribute("href") === "#" + expanded.id);
+function firstVisibleQuestionId() {
+  const cards = document.querySelectorAll("details.question");
+  const cutoff = get("site-header").getBoundingClientRect().bottom + 20;
+  for (const card of cards) {
+    if (card.getBoundingClientRect().bottom > cutoff) return card.id;
+  }
+  return cards.length ? cards[cards.length - 1].id : null;
+}
+
+let activeNavigationId = null;
+function syncActiveNavigation(preferredId = null) {
+  const activeId = preferredId || firstVisibleQuestionId();
+  if (activeId === activeNavigationId) return;
+  activeNavigationId = activeId;
+  const links = get("quick-links");
+  let selected = null;
+  for (const link of links.querySelectorAll(".quick-link")) {
+    const active = link.getAttribute("href") === "#" + activeId;
     link.classList.toggle("is-active", active);
-    if (active) link.setAttribute("aria-current", "location");
+    if (active) {
+      link.setAttribute("aria-current", "location");
+      selected = link;
+    }
     else link.removeAttribute("aria-current");
+  }
+  if (selected) {
+    const container = links.getBoundingClientRect();
+    const item = selected.getBoundingClientRect();
+    // Keep the current main question near the top of the sidebar as both move.
+    // Only scroll this list: moving the selection must not move the document.
+    const offset = item.top - container.top - 12;
+    if (Math.abs(offset) > 7) links.scrollTop += offset;
   }
 }
 
 function render() {
+  activeNavigationId = null;
   const filtered = state.records.filter(matches);
   get("questions").replaceChildren(...filtered.map(card));
   renderNavigation(filtered);
   syncActiveNavigation();
   get("empty").hidden = filtered.length !== 0;
   get("result-count").textContent = filtered.length + " shown";
+}
+
+function syncHeaderHeight() {
+  const height = get("site-header").getBoundingClientRect().height;
+  document.documentElement.style.setProperty("--header-height", height + "px");
+}
+
+let scrollScheduled = false;
+function onPageScroll() {
+  if (scrollScheduled) return;
+  scrollScheduled = true;
+  requestAnimationFrame(() => {
+    scrollScheduled = false;
+    syncActiveNavigation();
+  });
 }
 
 async function start() {
@@ -213,6 +260,8 @@ async function start() {
     syncDateLimits();
     get("poll-count").textContent = data.meta.pollCount ?? "—";
     render();
+    syncHeaderHeight();
+    onPageScroll();
     if (window.location.hash) {
       const selected = document.getElementById(window.location.hash.slice(1));
       if (selected && selected.tagName === "DETAILS") {
@@ -226,6 +275,16 @@ async function start() {
     console.error(error);
   }
 }
+
+window.addEventListener("scroll", onPageScroll, {passive:true});
+window.addEventListener("resize", () => {
+  syncHeaderHeight();
+  onPageScroll();
+});
+if (typeof ResizeObserver !== "undefined") {
+  new ResizeObserver(syncHeaderHeight).observe(get("site-header"));
+}
+syncHeaderHeight();
 
 get("search").addEventListener("input", e => {state.search = e.target.value; render();});
 get("mode-select").addEventListener("change", e => {state.mode = e.target.value; render();});
