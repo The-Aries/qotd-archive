@@ -235,14 +235,9 @@ function syncHeaderHeight() {
   document.documentElement.style.setProperty("--header-height", height + "px");
 }
 
-let scrollScheduled = false;
 function onPageScroll() {
-  if (scrollScheduled) return;
-  scrollScheduled = true;
-  requestAnimationFrame(() => {
-    scrollScheduled = false;
-    syncActiveNavigation();
-  });
+  // The small static archive can update immediately, including in background tabs.
+  syncActiveNavigation();
 }
 
 async function start() {
