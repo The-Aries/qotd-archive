@@ -3,7 +3,7 @@
     "timezone": "Europe/Berlin",
     "identifiedGroupPollMessages": 38,
     "inventoryCheckedOn": "2026-11-07",
-    "coverageNote": "Work in progress. 38 poll messages by all group members were located in the local EBS-Socializing chat database (13 by the archive owner and 25 by others). Some polls may not be QOTDs, and some QOTDs may be text-only. This is not a confirmed count of distinct QOTDs. Only independently verified questions appear below."
+    "coverageNote": "The 38 poll messages include unrelated and multi-part polls. The total number of QOTDs is still being verified."
   },
   "questions": [
     {
