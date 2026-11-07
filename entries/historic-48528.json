@@ -1,0 +1,35 @@
+{
+  "id": "historic-48528",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-05-18",
+  "time": "23:37",
+  "category": "Everyday Life",
+  "question": "Question of the night: What’s the most accurate title for your life right now?",
+  "multipleChoice": true,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "A) Procrastination: The Speedrun",
+      "votes": 32
+    },
+    {
+      "text": "B) Adulting on Easy Mode... Failed",
+      "votes": 9
+    },
+    {
+      "text": "C) A Series of Unfortunate Tabs I Left Open",
+      "votes": 3
+    },
+    {
+      "text": "D) How I Learned to Stop Caring and Love Caffeine",
+      "votes": 18
+    },
+    {
+      "text": "E) Any other, you can specify",
+      "votes": 2
+    }
+  ],
+  "notes": ""
+}

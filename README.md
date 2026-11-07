@@ -1,29 +1,72 @@
-# QOTD Archive
+# Question of the Day Archive
 
-A small, searchable static Question of the Day archive.
+A simple, searchable public archive of Questions of the Day and aggregated WhatsApp poll results.
 
-Live page: https://the-aries.github.io/qotd-archive/
+**Website:** https://the-aries.github.io/qotd-archive/
 
-## Local preview
+**Add a new question:** [Fill in the GitHub form](https://github.com/The-Aries/qotd-archive/issues/new?template=qotd.yml)
 
-From the repository root, run: python3 -m http.server 8000
+## Add a question (no coding required)
 
-Open: http://localhost:8000/
+1. Open **Add a new question** and fill in the original question, date, voting mode and answer choices.
+2. Enter each choice on its own line as `Choice | number`. Use `?` if the vote count is unknown. For an open-ended question, leave the choices blank.
+3. Submit the form. The GitHub bot creates a **pull request** containing one small JSON file.
+4. A maintainer checks the information and merges the PR. The website then updates automatically.
 
-## Updating questions
+Follow-up questions: choose **Follow-up** in the form, and paste the parent topic ID (for example `historic-51770` or `issue-123`). Follow-ups are shown inside their main question's card, not as separate QOTDs.
 
-Edit data/qotd.json. Keep dates in Europe/Berlin local time. Publish only verified questions, answer choices and aggregated results. Unverified vote counts remain null, never zero.
-For partial results, enter only independently observed option counts and set votesAsOf to the date they were checked; all unknown counts remain null. The website labels partial observations and never treats null as zero.
-Open-ended QOTDs without poll options are also in scope; represent them with an empty options array. Do not assume that only the repository owner's posts qualify.
+**No Git, code editor, CSV, Excel or Google account is necessary for contributors.** A free GitHub account is required to submit the form.
 
-For a local, read-only inventory on a Mac with WhatsApp installed, run:
+See [CONTRIBUTING.md](CONTRIBUTING.md) for examples and review guidance.
 
-    python3 scripts/scan_polls.py --chat "EBS-Socializing"
+## How it works
 
-The group-wide inventory, including polls authored by other group members and text messages mentioning QOTD, is written under private/ and excluded from Git. WhatsApp poll message type 46 was observed in this installation in November 2026; it is not a documented public API. This count is **all group polls**, not necessarily QOTDs, and text-only QOTDs can also exist.
+```text
+GitHub Issue Form -> validation -> one JSON file + PR
+                                    |
+                            maintainer reviews
+                                    |
+                                merge to main
+                                    |
+                       GitHub Actions validates and builds
+                                    |
+                        GitHub Pages displays new data
+```
 
-To inspect the original poll content, use WhatsApp on macOS: open the target group, choose the Polls filter, select a poll in the results list, and read the original poll card. Keep any screenshots and working notes under the ignored private/ directory. Do not invent unavailable counts.
+- Source of truth: `entries/*.json` (one entry per original poll or text-only question).
+- Main entries have `kind: "main"`; Follow-ups have `kind: "followup"` and a `parentId`.
+- The builder (`scripts/build_archive.py`) groups related entries and generates `data/qotd.json`. This JSON is a **build artifact**, not the source of truth.
+- Each question opens as a collapsed card. Users can search, filter by category/type/date and view each option's aggregated vote count.
+- A single-choice poll with complete counts can infer its participant count as the total of the choice counts. Multi-choice polls never infer unique participants from vote totals. Unknown numbers stay unknown.
 
-## Data protection
+## Preview locally
 
-Do not commit group messages, participant identities, phone numbers, raw chat exports or database records. Poll-message count is not necessarily the number of unique QOTDs; split and unrelated polls require manual review.
+```bash
+python3 scripts/build_archive.py
+python3 -m http.server 8000
+```
+
+Open http://localhost:8000/. Run tests with:
+
+```bash
+python3 -m unittest discover -s tests -v
+node --check app.js
+```
+
+## Maintainer setup
+
+This repository includes three GitHub Actions: **QOTD form to pull request**, **Validate QOTD**, and **Deploy QOTD archive**.
+
+The automated PR feature requires repository Settings -> Actions -> General -> **Allow GitHub Actions to create and approve pull requests**. The workflow itself has scoped `contents: write`, `pull-requests: write` and `issues: write` permissions.
+
+For GitHub Pages use Settings -> Pages -> **Source: GitHub Actions**. The deploy workflow publishes only the site HTML, JavaScript and validated JSON (not `entries/`, `private/` or working screenshots).
+
+The QOTD Issue Form has a label `qotd-submission` to route submitted issues to the PR workflow. Bot-created PR checks may need a maintainer to approve the initial workflow run, according to GitHub's security controls.
+
+Do not merge unreviewed submissions. Do not post WhatsApp raw exports, screenshots containing names, participant lists, phone numbers or individual ballots.
+
+## Historical data coverage
+
+The initial review identified 38 candidate poll messages in the EBS-Socializing chat. All 38 were reconstructed locally, but **eight do not have confirmed QOTD status**. Only 27 confirmed QOTD poll groups, their three nested follow-up/continuation polls, and one standalone text-only QOTD were selected for the initial public archive. The excluded candidates remain in the local private review and are not silently counted as QOTDs.
+
+Privacy-sensitive local inventory and screenshot evidence stay in `private/`, which Git ignores. Any uncertainty in the source is shown as unknown rather than fabricated.

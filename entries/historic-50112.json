@@ -1,0 +1,43 @@
+{
+  "id": "historic-50112",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-07-14",
+  "time": "16:34",
+  "category": "Campus",
+  "question": "Question of the day: What makes you stay in EBS?",
+  "multipleChoice": true,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "The good bar service",
+      "votes": 16
+    },
+    {
+      "text": "It is close to the university",
+      "votes": 41
+    },
+    {
+      "text": "The reliable dorm facilities",
+      "votes": 1
+    },
+    {
+      "text": "My empty wallet",
+      "votes": 72
+    },
+    {
+      "text": "My friends live here",
+      "votes": 8
+    },
+    {
+      "text": "I like construction sites",
+      "votes": 10
+    },
+    {
+      "text": "Other — please specify",
+      "votes": 1
+    }
+  ],
+  "notes": ""
+}

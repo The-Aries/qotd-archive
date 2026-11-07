@@ -1,0 +1,31 @@
+{
+  "id": "historic-48046",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-05-08",
+  "time": "15:19",
+  "category": "Campus",
+  "question": "Speaking of EBS traditions. Question of the day: Which is your favourite?",
+  "multipleChoice": false,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "Döner",
+      "votes": 29
+    },
+    {
+      "text": "Yufka",
+      "votes": 13
+    },
+    {
+      "text": "Lahmacun",
+      "votes": 0
+    },
+    {
+      "text": "Depends on the day",
+      "votes": 9
+    }
+  ],
+  "notes": ""
+}

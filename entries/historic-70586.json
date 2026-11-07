@@ -1,0 +1,51 @@
+{
+  "id": "historic-70586",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-11-03",
+  "time": "09:43",
+  "category": "Technology",
+  "question": "Question of the Day\n\nHow many browser tabs do you have open right now?\n\nAND How often do you lose track of which ones you've already viewed?\n\nSelect TWO options: one for each question.\n\nTab Count: Count all tabs open on your computer at the moment you see",
+  "multipleChoice": null,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "0–5 tabs",
+      "votes": 25
+    },
+    {
+      "text": "6–12 tabs",
+      "votes": 18
+    },
+    {
+      "text": "13–20 tabs",
+      "votes": 5
+    },
+    {
+      "text": "21–30 tabs",
+      "votes": 7
+    },
+    {
+      "text": "31+ tabs",
+      "votes": 33
+    },
+    {
+      "text": "Sometimes or never lose track",
+      "votes": 24
+    },
+    {
+      "text": "Often lose track",
+      "votes": 17
+    },
+    {
+      "text": "I have to open each tab to figure out whether I've already viewed it.",
+      "votes": 0
+    },
+    {
+      "text": "I want to say something else (specify in the group chat)",
+      "votes": 0
+    }
+  ],
+  "notes": ""
+}

@@ -1,0 +1,35 @@
+{
+  "id": "historic-67827",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-10-21",
+  "time": "10:10",
+  "category": "Everyday Life",
+  "question": "Question of the day️: What were the loud sounds this morning?",
+  "multipleChoice": true,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "A fart",
+      "votes": 2
+    },
+    {
+      "text": "The collapse of the Ulmer Münster",
+      "votes": 12
+    },
+    {
+      "text": "The Russians",
+      "votes": 16
+    },
+    {
+      "text": "[name] got a gun",
+      "votes": 27
+    },
+    {
+      "text": "Something else (please elaborate)",
+      "votes": 3
+    }
+  ],
+  "notes": ""
+}

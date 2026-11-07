@@ -1,0 +1,23 @@
+{
+  "id": "historic-48296",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-02-24",
+  "time": "10:20",
+  "category": "Community",
+  "question": "So should we ban flyers to reduce waste, or allow them to support small businesses?",
+  "multipleChoice": true,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "Allow Flyers to help local businesses",
+      "votes": 12
+    },
+    {
+      "text": "Ban them to save resources",
+      "votes": 47
+    }
+  ],
+  "notes": ""
+}

@@ -1,0 +1,59 @@
+{
+  "id": "historic-48434",
+  "kind": "main",
+  "parentId": null,
+  "date": "2025-12-12",
+  "time": "12:55",
+  "category": "Everyday Life",
+  "question": "Question of the Day: What do you listen to when falling asleep?",
+  "multipleChoice": true,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "Nothing (weird)",
+      "votes": 66
+    },
+    {
+      "text": "Music",
+      "votes": 20
+    },
+    {
+      "text": "ASMR",
+      "votes": 7
+    },
+    {
+      "text": "Soundscape (Rain, etc.)",
+      "votes": 7
+    },
+    {
+      "text": "Sherlock Holmes Stories",
+      "votes": 5
+    },
+    {
+      "text": "Die drei Fragezeichen",
+      "votes": 8
+    },
+    {
+      "text": "True Crime Podcast",
+      "votes": 6
+    },
+    {
+      "text": "Television",
+      "votes": 10
+    },
+    {
+      "text": "Other Podcast (specify)",
+      "votes": 13
+    },
+    {
+      "text": "Other Audiobook (specify)",
+      "votes": 1
+    },
+    {
+      "text": "Other (specify)",
+      "votes": 10
+    }
+  ],
+  "notes": ""
+}

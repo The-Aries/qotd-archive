@@ -1,0 +1,31 @@
+{
+  "id": "historic-51376",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-02-27",
+  "time": "08:33",
+  "category": "Everyday Life",
+  "question": "Meta question of the day: Can we trust your \"question of the day\" answers?",
+  "multipleChoice": false,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "Yes; I tell the truth and nothing but the truth",
+      "votes": 57
+    },
+    {
+      "text": "I don't know, can you?",
+      "votes": 16
+    },
+    {
+      "text": "No, including on this one :)",
+      "votes": 3
+    },
+    {
+      "text": "I pick randomly; I am an agent of chaos",
+      "votes": 6
+    }
+  ],
+  "notes": ""
+}

@@ -1,0 +1,47 @@
+{
+  "id": "historic-70756",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-11-04",
+  "time": "12:05",
+  "category": "Technology",
+  "question": "*Question of the Day*\n\nHave you heard of MBTI? If so, what's your personality type?\n\nYou can select multiple types if you've received different results over time.\n\nThe options are split into two polls because of WhatsApp's limit.\n\nPoll 1 — Introverts。",
+  "multipleChoice": true,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "INTJ — Architect",
+      "votes": 7
+    },
+    {
+      "text": "INTP — Logician",
+      "votes": 9
+    },
+    {
+      "text": "INFJ — Advocate",
+      "votes": 5
+    },
+    {
+      "text": "INFP — Mediator",
+      "votes": 0
+    },
+    {
+      "text": "ISTJ — Logistician",
+      "votes": 2
+    },
+    {
+      "text": "ISFJ — Defender",
+      "votes": 0
+    },
+    {
+      "text": "ISTP — Virtuoso",
+      "votes": 1
+    },
+    {
+      "text": "ISFP — Adventurer",
+      "votes": 1
+    }
+  ],
+  "notes": ""
+}

@@ -1,0 +1,43 @@
+{
+  "id": "historic-49439",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-04-11",
+  "time": "17:58",
+  "category": "Everyday Life",
+  "question": "*Question of the Day* With the nice warm temperatures rn, what's your most anticipated summer activity?",
+  "multipleChoice": null,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "Chilling at the Lake",
+      "votes": 8
+    },
+    {
+      "text": "Grilling",
+      "votes": 2
+    },
+    {
+      "text": "Sports",
+      "votes": 17
+    },
+    {
+      "text": "Eating Ice Cream",
+      "votes": 0
+    },
+    {
+      "text": "Spending time in Nature",
+      "votes": 27
+    },
+    {
+      "text": "Just sitting outside, drinking yummy yummy beers",
+      "votes": 23
+    },
+    {
+      "text": "Other (specify)",
+      "votes": 0
+    }
+  ],
+  "notes": ""
+}

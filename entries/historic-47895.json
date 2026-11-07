@@ -1,0 +1,31 @@
+{
+  "id": "historic-47895",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-02-19",
+  "time": "16:57",
+  "category": "Everyday Life",
+  "question": "Have you ever asked a question in the group looking for one specific person? If so, have you actually found the person or gotten help with your problem?",
+  "multipleChoice": false,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "I never asked such a question",
+      "votes": 44
+    },
+    {
+      "text": "I got help",
+      "votes": 9
+    },
+    {
+      "text": "I didn't get help",
+      "votes": 4
+    },
+    {
+      "text": "I asked multiple times and got help sometimes",
+      "votes": 0
+    }
+  ],
+  "notes": ""
+}

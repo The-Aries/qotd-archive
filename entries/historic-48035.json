@@ -1,0 +1,35 @@
+{
+  "id": "historic-48035",
+  "kind": "main",
+  "parentId": null,
+  "date": "2025-11-24",
+  "time": "20:06",
+  "category": "Everyday Life",
+  "question": "Question of the day: Whats your favourite unusual metric?",
+  "multipleChoice": false,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "Scoville (Spiciness)",
+      "votes": 22
+    },
+    {
+      "text": "Olf (Body Odor intensity)",
+      "votes": 1
+    },
+    {
+      "text": "Banana Equivalent Dose (Radiation)",
+      "votes": 38
+    },
+    {
+      "text": "Beard-Second (Length)",
+      "votes": 5
+    },
+    {
+      "text": "Other (Specify)",
+      "votes": 5
+    }
+  ],
+  "notes": ""
+}

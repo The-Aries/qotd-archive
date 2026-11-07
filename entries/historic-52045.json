@@ -1,0 +1,27 @@
+{
+  "id": "historic-52045",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-03-13",
+  "time": "15:22",
+  "category": "Everyday Life",
+  "question": "Nice weather for a QUESTION OF THE DAY! What is the true price of a good memory?",
+  "multipleChoice": false,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "It's 0.87€",
+      "votes": 9
+    },
+    {
+      "text": "What's the question again?",
+      "votes": 17
+    },
+    {
+      "text": "It's priceless",
+      "votes": 24
+    }
+  ],
+  "notes": ""
+}
