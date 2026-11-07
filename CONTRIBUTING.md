@@ -20,7 +20,7 @@ Submit the GitHub issue. The bot creates a new PR for review automatically. The 
 
 ## Add a Follow-up
 
-Select **Follow-up** as entry type. Find the main topic ID on the website (or in its URL after opening its card). Put that ID into **Main topic ID**.
+Select **Follow-up** as entry type. Expand the main question's card on the website and select **Copy topic ID**. Paste that into **Main topic ID**.
 
 Example: `historic-51770` is the Uni Party main question. A follow-up to that topic is displayed **under its main card**. Please submit main questions first and wait for their PR to merge before submitting their follow-ups.
 

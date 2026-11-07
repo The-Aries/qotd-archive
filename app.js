@@ -78,6 +78,20 @@ function card(entry) {
   card.append(summary);
   const interior = element("div", "question-expanded");
   interior.append(optionsView(entry));
+  const identity = element("div", "topic-id");
+  const code = element("code", "", entry.id);
+  const copy = element("button", "copy-id", "Copy topic ID");
+  copy.type = "button";
+  copy.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(entry.id);
+      copy.textContent = "Copied";
+    } catch {
+      copy.textContent = "Select the ID to copy";
+    }
+  });
+  identity.append(element("span", "", "Topic ID: "), code, copy);
+  interior.append(identity);
   for (let index = 0; index < entry.followups.length; index++) {
     const child = entry.followups[index];
     const section = element("section", "followup");
@@ -146,6 +160,13 @@ async function start() {
       get("topic-select").append(option);
     }
     render();
+    if (window.location.hash) {
+      const selected = document.getElementById(window.location.hash.slice(1));
+      if (selected && selected.tagName === "DETAILS") {
+        selected.open = true;
+        selected.scrollIntoView({block: "start"});
+      }
+    }
   } catch (error) {
     get("load-error").hidden = false;
     get("result-count").textContent = "Archive unavailable";
