@@ -1,5 +1,8 @@
 "use strict";
-const state = {records: [], mode: "all", search: "", from: "", to: ""};
+const state = {
+  records: [], mode: "all", search: "", from: "", to: "",
+  minDate: "", maxDate: ""
+};
 const get = (id) => document.getElementById(id);
 
 function element(tag, className = "", value = null) {
@@ -83,6 +86,7 @@ function card(entry) {
         if (other !== card) other.open = false;
       }
     }
+    syncActiveNavigation();
   });
   const summary = element("summary", "question-summary");
   const heading = element("span", "question-title", questionTitle(entry.question));
@@ -167,6 +171,7 @@ function renderNavigation(filtered) {
     link.addEventListener("click", () => {
       const target = document.getElementById(entry.id);
       if (target) target.open = true;
+      syncActiveNavigation();
     });
     items.push(link);
   }
@@ -174,10 +179,21 @@ function renderNavigation(filtered) {
   get("quick-empty").hidden = filtered.length > 0;
 }
 
+function syncActiveNavigation() {
+  const expanded = document.querySelector("details.question[open]");
+  for (const link of get("quick-links").querySelectorAll(".quick-link")) {
+    const active = Boolean(expanded && link.getAttribute("href") === "#" + expanded.id);
+    link.classList.toggle("is-active", active);
+    if (active) link.setAttribute("aria-current", "location");
+    else link.removeAttribute("aria-current");
+  }
+}
+
 function render() {
   const filtered = state.records.filter(matches);
   get("questions").replaceChildren(...filtered.map(card));
   renderNavigation(filtered);
+  syncActiveNavigation();
   get("empty").hidden = filtered.length !== 0;
   get("result-count").textContent = filtered.length + " shown";
 }
@@ -190,6 +206,11 @@ async function start() {
     if (!Array.isArray(data.questions) || !data.questions.every(q => validEntry(q, true)))
       throw new Error("Invalid archive data");
     state.records = data.questions;
+    state.minDate = state.records.reduce(
+      (min, entry) => entry.date < min ? entry.date : min,
+      state.records[0]?.date || ""
+    );
+    syncDateLimits();
     get("poll-count").textContent = data.meta.pollCount ?? "—";
     render();
     if (window.location.hash) {
@@ -217,22 +238,54 @@ function isoDateOrNull(value) {
     ? value : null;
 }
 
+function todayInBerlin() {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Berlin", year: "numeric", month: "2-digit", day: "2-digit"
+  }).formatToParts(new Date());
+  const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
+  return values.year + "-" + values.month + "-" + values.day;
+}
+
+function syncDateLimits() {
+  state.maxDate = todayInBerlin();
+  for (const field of ["from", "to"]) {
+    const picker = get("date-" + field + "-picker");
+    picker.min = state.minDate;
+    picker.max = state.maxDate;
+    get("date-" + field).title =
+      "Available dates: " + state.minDate + " to " + state.maxDate;
+  }
+}
+
 function bindDateFilter(field) {
   const text = get("date-" + field);
   const picker = get("date-" + field + "-picker");
-  const update = () => {
-    const value = isoDateOrNull(text.value.trim());
-    text.setAttribute("aria-invalid", String(value === null));
-    state[field] = value || "";
-    if (value !== null) picker.value = value;
+  const update = (finalize = false) => {
+    syncDateLimits();
+    let value = isoDateOrNull(text.value.trim());
+    if (finalize) {
+      if (value === null) value = "";
+      if (value && state.minDate && value < state.minDate) value = state.minDate;
+      if (value && value > state.maxDate) value = state.maxDate;
+      text.value = value;
+    }
+    const allowed = value !== null && (
+      !value || ((!state.minDate || value >= state.minDate) && value <= state.maxDate)
+    );
+    text.setAttribute("aria-invalid", String(!allowed));
+    state[field] = allowed ? value : "";
+    picker.value = allowed ? value : "";
     render();
   };
-  text.addEventListener("input", update);
+  text.addEventListener("input", () => update());
+  text.addEventListener("change", () => update(true));
+  text.addEventListener("blur", () => update(true));
   picker.addEventListener("change", () => {
     text.value = picker.value;
-    update();
+    update(true);
   });
   get("date-" + field + "-calendar").addEventListener("click", () => {
+    syncDateLimits();
     if (typeof picker.showPicker === "function") picker.showPicker();
     else { picker.focus(); picker.click(); }
   });
