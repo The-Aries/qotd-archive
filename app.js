@@ -76,6 +76,14 @@ function optionsView(entry) {
 function card(entry) {
   const card = element("details", "question");
   card.id = entry.id;
+  card.name = "qotd";
+  card.addEventListener("toggle", () => {
+    if (card.open) {
+      for (const other of document.querySelectorAll("details.question[open]")) {
+        if (other !== card) other.open = false;
+      }
+    }
+  });
   const summary = element("summary", "question-summary");
   const heading = element("span", "question-title", questionTitle(entry.question));
   const small = meta(entry, entry.followups.length);
@@ -153,6 +161,7 @@ function renderNavigation(filtered) {
     }
     const link = element("a", "quick-link");
     link.href = "#" + entry.id;
+    link.title = questionTitle(entry.question);
     link.append(element("span", "quick-date", entry.date));
     link.append(element("span", "quick-label", questionTitle(entry.question)));
     link.addEventListener("click", () => {
@@ -199,6 +208,36 @@ async function start() {
 
 get("search").addEventListener("input", e => {state.search = e.target.value; render();});
 get("mode-select").addEventListener("change", e => {state.mode = e.target.value; render();});
-get("date-from").addEventListener("change", e => {state.from = e.target.value; render();});
-get("date-to").addEventListener("change", e => {state.to = e.target.value; render();});
+
+function isoDateOrNull(value) {
+  if (!value) return "";
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+  const date = new Date(value + "T00:00:00Z");
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value
+    ? value : null;
+}
+
+function bindDateFilter(field) {
+  const text = get("date-" + field);
+  const picker = get("date-" + field + "-picker");
+  const update = () => {
+    const value = isoDateOrNull(text.value.trim());
+    text.setAttribute("aria-invalid", String(value === null));
+    state[field] = value || "";
+    if (value !== null) picker.value = value;
+    render();
+  };
+  text.addEventListener("input", update);
+  picker.addEventListener("change", () => {
+    text.value = picker.value;
+    update();
+  });
+  get("date-" + field + "-calendar").addEventListener("click", () => {
+    if (typeof picker.showPicker === "function") picker.showPicker();
+    else { picker.focus(); picker.click(); }
+  });
+}
+
+bindDateFilter("from");
+bindDateFilter("to");
 start();
