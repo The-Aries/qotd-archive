@@ -1,0 +1,27 @@
+{
+  "id": "historic-47737",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-05-19",
+  "time": "21:12",
+  "category": "Everyday Life",
+  "question": "Question of the day: What download speed do you reach?",
+  "multipleChoice": false,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "~ 200 Mbps",
+      "votes": 11
+    },
+    {
+      "text": "~ 30 Mbps",
+      "votes": 7
+    },
+    {
+      "text": "Other",
+      "votes": 5
+    }
+  ],
+  "notes": ""
+}

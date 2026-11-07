@@ -1,0 +1,40 @@
+name: QOTD form to pull request
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  prepare:
+    if: contains(github.event.issue.labels.*.name, 'qotd-submission')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate form and open PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPOSITORY: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="contribute/issue-${ISSUE_NUMBER}"
+          git switch -c "${branch}"
+          python3 -m scripts.issue_to_entry "${GITHUB_EVENT_PATH}" --output "entries/issue-${ISSUE_NUMBER}.json"
+          python3 -m unittest discover -s tests
+          python3 scripts/build_archive.py --output /tmp/qotd-validated.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "entries/issue-${ISSUE_NUMBER}.json"
+          git commit -m "feat: add QOTD from issue #${ISSUE_NUMBER}"
+          git push origin "${branch}"
+          gh pr create --repo "${REPOSITORY}" --base main --head "${branch}" \
+            --title "Add QOTD from issue #${ISSUE_NUMBER}" \
+            --body "Generated from #${ISSUE_NUMBER}. Review the question, options, vote counts, privacy and Follow-up relation before merging. Closes #${ISSUE_NUMBER}."
+          gh issue comment "${ISSUE_NUMBER}" --repo "${REPOSITORY}" \
+            --body "A pull request has been created for review. The website will not change until it is merged."

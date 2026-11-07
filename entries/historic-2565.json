@@ -1,0 +1,47 @@
+{
+  "id": "historic-2565",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-10-12",
+  "time": "08:33",
+  "category": "Campus",
+  "question": "Question of the Day\n\nNew semester, new schedule! How many days a week do you have to start school or work before 9 AM?\n\nCount only confirmed days.",
+  "multipleChoice": false,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "0",
+      "votes": 16
+    },
+    {
+      "text": "1",
+      "votes": 8
+    },
+    {
+      "text": "2",
+      "votes": 9
+    },
+    {
+      "text": "3",
+      "votes": 20
+    },
+    {
+      "text": "4",
+      "votes": 5
+    },
+    {
+      "text": "5",
+      "votes": 14
+    },
+    {
+      "text": "6",
+      "votes": 0
+    },
+    {
+      "text": "7",
+      "votes": 1
+    }
+  ],
+  "notes": ""
+}

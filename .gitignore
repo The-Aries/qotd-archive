@@ -2,4 +2,6 @@
 private/
 __pycache__/
 interceptor-macos-screenshot-*.jpg
+data/qotd.json
+_site/
 

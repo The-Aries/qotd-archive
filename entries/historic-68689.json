@@ -1,0 +1,55 @@
+{
+  "id": "historic-68689",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-10-24",
+  "time": "14:18",
+  "category": "Campus",
+  "question": "*Question of the Day:\nWhat problems or inconveniences have you experienced while living at EBS? (Multiple answers possible)*",
+  "multipleChoice": true,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "Water supply / hot water issues",
+      "votes": 60
+    },
+    {
+      "text": "Heating problems",
+      "votes": 39
+    },
+    {
+      "text": "Internet / Wi-Fi issues",
+      "votes": 94
+    },
+    {
+      "text": "Power outages / tripped circuit breakers",
+      "votes": 18
+    },
+    {
+      "text": "Blocked toilets / drains",
+      "votes": 55
+    },
+    {
+      "text": "Forgotten keys / getting locked out",
+      "votes": 32
+    },
+    {
+      "text": "Noise / late-night parties",
+      "votes": 58
+    },
+    {
+      "text": "Smoking / unpleasant smells",
+      "votes": 27
+    },
+    {
+      "text": "Littering / improper waste disposal",
+      "votes": 44
+    },
+    {
+      "text": "Other (please specify in the chat)",
+      "votes": 13
+    }
+  ],
+  "notes": ""
+}

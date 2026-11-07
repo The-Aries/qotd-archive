@@ -1,0 +1,23 @@
+{
+  "id": "historic-52051",
+  "kind": "followup",
+  "parentId": "historic-51770",
+  "date": "2026-05-10",
+  "time": "23:48",
+  "category": "Everyday Life",
+  "question": "Followup 2",
+  "multipleChoice": true,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "Yes because i like the music",
+      "votes": 5
+    },
+    {
+      "text": "No because I dislike the music",
+      "votes": 7
+    }
+  ],
+  "notes": ""
+}

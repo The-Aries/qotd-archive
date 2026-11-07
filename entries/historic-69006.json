@@ -1,0 +1,55 @@
+{
+  "id": "historic-69006",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-10-25",
+  "time": "17:05",
+  "category": "Campus",
+  "question": "Question of the Day: What do you like about EBS Bar? (multiple answers possible)",
+  "multipleChoice": true,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "Dedicated Bar tutors",
+      "votes": 22
+    },
+    {
+      "text": "Friendly People & Atmosphere",
+      "votes": 27
+    },
+    {
+      "text": "Student-Friendly Prices",
+      "votes": 37
+    },
+    {
+      "text": "Regular Openings",
+      "votes": 16
+    },
+    {
+      "text": "Game Nights",
+      "votes": 7
+    },
+    {
+      "text": "Movie Nights",
+      "votes": 7
+    },
+    {
+      "text": "Karaoke Nights",
+      "votes": 2
+    },
+    {
+      "text": "Special Drinks",
+      "votes": 1
+    },
+    {
+      "text": "Other / Something You Dislike (Specify in chat)",
+      "votes": 3
+    },
+    {
+      "text": "Who said I even like this bar?!",
+      "votes": 1
+    }
+  ],
+  "notes": ""
+}

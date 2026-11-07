@@ -1,0 +1,35 @@
+{
+  "id": "historic-48893",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-06-24",
+  "time": "01:20",
+  "category": "Everyday Life",
+  "question": "Question of the nightThe Heatwave 🥵\nHow are you surviving the fact that AC basically doesn't exist in this country?",
+  "multipleChoice": true,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "The Vampire: Sitting in complete darkness behind closed Rollläden.",
+      "votes": 44
+    },
+    {
+      "text": "The Daredevil: Risking instant death by Zugluft (a draft)",
+      "votes": 13
+    },
+    {
+      "text": "Squatter: Moving into the supermarket beer fridge.",
+      "votes": 2
+    },
+    {
+      "text": "The DB Commuter: Melting on a delayed…",
+      "votes": 3
+    },
+    {
+      "text": "The Traditionalist: Complaining that it's not the heat, it's the Schwüle.",
+      "votes": 7
+    }
+  ],
+  "notes": "One original option label is truncated in the source screenshot."
+}

@@ -1,0 +1,27 @@
+{
+  "id": "historic-2489",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-10-13",
+  "time": "20:57",
+  "category": "Everyday Life",
+  "question": "Question of the Day: \n\nHow do you like the idea of Question of the Day?",
+  "multipleChoice": false,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "I try to answer the question whenever I am able to",
+      "votes": 80
+    },
+    {
+      "text": "I normally skip these questions, but today I have strong desire to say this whole idea is stupid",
+      "votes": 4
+    },
+    {
+      "text": "The Silent Majority (a placeholder for those who don't vote, for whatever reasons. PLEASE DON'T VOTE!)",
+      "votes": 5
+    }
+  ],
+  "notes": ""
+}

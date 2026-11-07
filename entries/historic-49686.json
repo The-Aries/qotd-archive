@@ -1,0 +1,43 @@
+{
+  "id": "historic-49686",
+  "kind": "main",
+  "parentId": null,
+  "date": "2025-12-02",
+  "time": "12:54",
+  "category": "Campus",
+  "question": "*Question of the Day*: What's the worst student job?",
+  "multipleChoice": false,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "HiWi",
+      "votes": 1
+    },
+    {
+      "text": "Warehouse Worker",
+      "votes": 3
+    },
+    {
+      "text": "Waiter",
+      "votes": 7
+    },
+    {
+      "text": "Bar Staff",
+      "votes": 1
+    },
+    {
+      "text": "Fast Food Worker",
+      "votes": 32
+    },
+    {
+      "text": "Supermarket",
+      "votes": 3
+    },
+    {
+      "text": "PhD student",
+      "votes": 11
+    }
+  ],
+  "notes": ""
+}

@@ -1,0 +1,89 @@
+name: Add a Question of the Day
+description: Fill out a simple form. A reviewable pull request is prepared automatically.
+title: "[QOTD] "
+labels: ["qotd-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **No coding required.** Enter a question and its answer choices below.
+        The bot will prepare a PR. Nothing appears on the website until a maintainer merges it.
+        Do not include participant names, phone numbers or individual ballot records.
+        To add a follow-up to an existing question, choose **Follow-up** and paste the main topic ID from its page.
+  - type: dropdown
+    id: entry-type
+    attributes:
+      label: Entry type
+      options: [Main question, Follow-up]
+    validations:
+      required: true
+  - type: input
+    id: parent
+    attributes:
+      label: Main topic ID (Follow-up only)
+      description: For example issue-123 or historic-51770. Leave empty for a main question.
+      placeholder: "issue-123"
+  - type: input
+    id: date
+    attributes:
+      label: Date (YYYY-MM-DD)
+      placeholder: "2026-11-07"
+    validations:
+      required: true
+  - type: input
+    id: time
+    attributes:
+      label: Time (HH:MM, optional)
+      description: Local time in Europe/Berlin. Leave empty if unknown.
+      placeholder: "20:00"
+  - type: dropdown
+    id: category
+    attributes:
+      label: Topic
+      options: [Campus, Everyday Life, Technology, Culture, Community, Other]
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: Paste the full original question, not a summary.
+      placeholder: "What was your favorite ...?"
+    validations:
+      required: true
+  - type: dropdown
+    id: voting
+    attributes:
+      label: Voting mode
+      options: [Single choice, Multiple choices, Not sure, Open-ended (no poll)]
+    validations:
+      required: true
+  - type: input
+    id: participants
+    attributes:
+      label: Participant count (optional)
+      description: Unique voters, not the sum of multi-choice votes. Leave blank if not known.
+      placeholder: "42"
+  - type: textarea
+    id: choices
+    attributes:
+      label: Choices and votes
+      description: One answer per line. Add a vertical bar and number, such as Apple | 12. If a vote count is unknown, use ?. Leave blank for a text-only QOTD.
+      placeholder: |
+        Apple | 12
+        Orange | 8
+        Other | ?
+    validations:
+      required: false
+  - type: dropdown
+    id: anonymous
+    attributes:
+      label: Anonymous vote
+      options: [Not sure, "Yes", "No"]
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional notes (optional)
+      description: Context or a public source link. Never paste private chat logs or participant information.

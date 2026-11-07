@@ -1,0 +1,27 @@
+{
+  "id": "historic-50821",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-01-17",
+  "time": "13:30",
+  "category": "Everyday Life",
+  "question": "Question of the Day: Is it okay to eat Kebap in public transport?",
+  "multipleChoice": true,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "Yes",
+      "votes": 49
+    },
+    {
+      "text": "Okay",
+      "votes": 11
+    },
+    {
+      "text": "Not at all",
+      "votes": 51
+    }
+  ],
+  "notes": ""
+}

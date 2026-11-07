@@ -1,0 +1,43 @@
+{
+  "id": "historic-49402",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-01-06",
+  "time": "02:00",
+  "category": "Everyday Life",
+  "question": "Question of the day, 🛏️😴night-time edition: Where do you get the best sleep?",
+  "multipleChoice": null,
+  "anonymous": null,
+  "participants": null,
+  "options": [
+    {
+      "text": "EBS dorm bed",
+      "votes": 21
+    },
+    {
+      "text": "Sleeping bag on a biking trip",
+      "votes": 3
+    },
+    {
+      "text": "Childhood home bed",
+      "votes": 52
+    },
+    {
+      "text": "Hotel bed",
+      "votes": 5
+    },
+    {
+      "text": "Hospital bed",
+      "votes": 1
+    },
+    {
+      "text": "Bathtub after party",
+      "votes": 1
+    },
+    {
+      "text": "Other (comment below)",
+      "votes": 4
+    }
+  ],
+  "notes": ""
+}
