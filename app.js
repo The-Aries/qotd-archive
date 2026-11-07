@@ -9,11 +9,24 @@ function element(tag, className = "", value = null) {
   return node;
 }
 
+// Presentation only: retain original text in entries for review and search.
+function questionTitle(value) {
+  let text = value.replace(/[\u2028\u2029]/g, "\n").trim();
+  text = text.replace(/^[\s*_]+/, "");
+  text = text.replace(/^nice weather for a\s+question of the day!\s*/i, "");
+  text = text.replace(/^(?:meta\s+)?question of the (?:day|night)(?=\b|[A-Z])/i, "");
+  text = text.replace(/^(speaking of EBS traditions\.)\s+question of the day\s*:/i, "$1");
+  text = text.replace(/^[\s*:_!.,\uFE0F\uFE0E\u2013\u2014-]+/, "");
+  text = text.replace(/\p{Extended_Pictographic}/gu, "");
+  text = text.replace(/[\u200D\uFE0E\uFE0F]/g, "");
+  text = text.replace(/\s*\n\s*/g, " ").replace(/\s{2,}/g, " ").trim();
+  return text.replace(/\*+$/g, "").trim() || value;
+}
+
 function labelForMode(entry) {
-  if (entry.options.length === 0) return "Text question";
   if (entry.multipleChoice === true) return "Multiple choice";
   if (entry.multipleChoice === false) return "Single choice";
-  return "Choice type unknown";
+  return null;
 }
 
 function votesLabel(count) {
@@ -25,9 +38,8 @@ function meta(entry, followupCount = 0) {
   const dt = element("time", "", entry.date + (entry.time ? " · " + entry.time : ""));
   dt.dateTime = entry.date + (entry.time ? "T" + entry.time : "");
   line.append(dt);
-  line.append(element("span", "", "Participants: " +
-    (entry.participants === null ? "unknown" : entry.participants)));
-  line.append(element("span", "", labelForMode(entry)));
+  const choiceMode = entry.options.length ? labelForMode(entry) : null;
+  if (choiceMode) line.append(element("span", "", choiceMode));
   if (followupCount > 0) line.append(element("span", "", followupCount + " follow-up" +
     (followupCount === 1 ? "" : "s")));
   return line;
@@ -45,7 +57,7 @@ function optionsView(entry) {
   for (const item of entry.options) {
     const row = element("li", "option");
     const body = element("div", "option-body");
-    body.append(element("div", "", item.text));
+    body.append(element("div", "", item.text.replace(/\p{Extended_Pictographic}/gu, "").trim()));
     if (Number.isInteger(item.votes)) {
       const bar = element("div", "bar");
       const fill = element("span");
@@ -58,13 +70,6 @@ function optionsView(entry) {
   }
   container.append(list);
   if (entry.notes) container.append(element("p", "footnote", entry.notes));
-  if (entry.participationSource === "single-choice-total") {
-    container.append(element("p", "footnote",
-      "Participant count inferred from total votes in a single-choice poll."));
-  } else if (entry.multipleChoice === true) {
-    container.append(element("p", "footnote",
-      "Multiple selections allowed; option vote totals are not unique participants."));
-  }
   return container;
 }
 
@@ -72,12 +77,14 @@ function card(entry) {
   const card = element("details", "question");
   card.id = entry.id;
   const summary = element("summary", "question-summary");
-  const heading = element("span", "question-title", entry.question);
+  const heading = element("span", "question-title", questionTitle(entry.question));
   const small = meta(entry, entry.followups.length);
   summary.append(heading, small);
   card.append(summary);
   const interior = element("div", "question-expanded");
   interior.append(optionsView(entry));
+  const reference = element("details", "topic-reference");
+  reference.append(element("summary", "", "Reference for follow-up submissions"));
   const identity = element("div", "topic-id");
   const code = element("code", "", entry.id);
   const copy = element("button", "copy-id", "Copy topic ID");
@@ -91,11 +98,12 @@ function card(entry) {
     }
   });
   identity.append(element("span", "", "Topic ID: "), code, copy);
-  interior.append(identity);
+  reference.append(identity);
+  interior.append(reference);
   for (let index = 0; index < entry.followups.length; index++) {
     const child = entry.followups[index];
     const section = element("section", "followup");
-    section.append(element("h3", "", "Follow-up " + (index + 1) + ": " + child.question));
+    section.append(element("h3", "", "Follow-up " + (index + 1) + ": " + questionTitle(child.question)));
     section.append(meta(child), optionsView(child));
     interior.append(section);
   }
@@ -146,7 +154,7 @@ function renderNavigation(filtered) {
     const link = element("a", "quick-link");
     link.href = "#" + entry.id;
     link.append(element("span", "quick-date", entry.date));
-    link.append(element("span", "quick-label", entry.question));
+    link.append(element("span", "quick-label", questionTitle(entry.question)));
     link.addEventListener("click", () => {
       const target = document.getElementById(entry.id);
       if (target) target.open = true;
@@ -173,7 +181,6 @@ async function start() {
     if (!Array.isArray(data.questions) || !data.questions.every(q => validEntry(q, true)))
       throw new Error("Invalid archive data");
     state.records = data.questions;
-    get("published-count").textContent = state.records.length;
     get("poll-count").textContent = data.meta.pollCount ?? "—";
     render();
     if (window.location.hash) {

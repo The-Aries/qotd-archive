@@ -1,10 +1,10 @@
-# Question of the Day Archive
+# Question of the Day in EBS
 
 A simple, searchable public archive of Questions of the Day and aggregated WhatsApp poll results.
 
-**Website:** https://the-aries.github.io/qotd-archive/
+**Website:** https://the-aries.github.io/question-of-the-day-in-ebs/
 
-**Add a new question:** [Fill in the GitHub form](https://github.com/The-Aries/qotd-archive/issues/new?template=qotd.yml)
+**Add a new question:** [Fill in the GitHub form](https://github.com/The-Aries/question-of-the-day-in-ebs/issues/new?template=qotd.yml)
 
 ## Add a question (no coding required)
 

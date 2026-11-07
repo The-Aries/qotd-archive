@@ -1,6 +1,6 @@
 # Contributing a Question of the Day
 
-The quickest method is [the GitHub form](https://github.com/The-Aries/qotd-archive/issues/new?template=qotd.yml). You do not need to know Git, JSON or programming.
+The quickest method is [the GitHub form](https://github.com/The-Aries/question-of-the-day-in-ebs/issues/new?template=qotd.yml). You do not need to know Git, JSON or programming.
 
 ## One question
 

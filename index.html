@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Question of the Day archive, grouped follow-ups and verified poll results.">
-  <title>QOTD Archive</title>
+  <meta name="description" content="Question of the Day in EBS — community questions and poll results.">
+  <title>Question of the Day in EBS</title>
   <style>
     :root { color-scheme: light; --ink:#303128; --muted:#777366; --line:#e5d9c5; --surface:#fffbf3; --green:#5b7253; --paper:#f6f0e3; }
     * { box-sizing:border-box; }
@@ -18,21 +18,24 @@
     nav { display:flex; flex-wrap:wrap; gap:18px; }
     header nav a { color:var(--muted); font-size:13px; font-weight:600; text-decoration:none; }
     nav a:hover { text-decoration:underline; }
-    .hero { padding:42px 0 31px; }
+    .hero { padding:37px 0 25px; }
     .eyebrow { font-size:12px; color:var(--green); text-transform:uppercase; font-weight:700; letter-spacing:.075em; margin:0 0 8px; }
     h1 { font-size:clamp(29px,3.5vw,40px); letter-spacing:-.04em; line-height:1.18; margin:0 0 9px; font-weight:750; }
-    .lede { margin:0 0 21px; color:var(--muted); }
+    .lede { margin:0; color:var(--muted); }
     .stats { display:flex; flex-wrap:wrap; gap:10px 25px; font-size:13px; }
     .stat strong { margin-right:6px; color:var(--green); font-size:18px; }
     .stat span, .coverage { color:var(--muted); }
     .coverage { font-size:12px; margin:13px 0 0; }
     .archive { border-top:1px solid var(--line); padding:27px 0 67px; }
-    .archive-layout { display:grid; grid-template-columns:minmax(0,1fr) 270px; align-items:start; gap:28px; }
+    .archive-layout { display:grid; grid-template-columns:250px minmax(0,1fr); align-items:start; gap:28px; }
     .archive-main { min-width:0; }
     .section-top { display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:17px; }
     h2 { font-size:19px; margin:0; font-weight:650; }
     .result-count { color:var(--muted); font-size:12px; }
-    .toolbar { display:grid; grid-template-columns:minmax(0,1fr) 185px; gap:10px; margin-bottom:11px; }
+    .toolbar { display:grid; grid-template-columns:minmax(180px,1fr) 156px 137px 137px; gap:9px; margin-bottom:19px; }
+    .toolbar label { min-width:0; }
+    .toolbar .date-field { display:flex; align-items:center; gap:7px; color:var(--muted); font-size:12px; }
+    .toolbar .date-field input { width:100%; min-width:0; padding:9px 7px; }
     .dates { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:15px; font-size:12px; color:var(--muted); }
     .dates label { display:flex; align-items:center; gap:8px; }
     input, select { width:100%; min-width:0; font:inherit; font-size:13px; color:var(--ink); background:var(--surface); border:1px solid #d8cbb5; border-radius:7px; padding:9px 11px; }
@@ -58,7 +61,9 @@
     .followup { margin:18px 0 0; padding:17px 0 0; border-top:1px dashed var(--line); }
     .followup h3 { margin:0 0 7px; font-weight:600; font-size:14px; overflow-wrap:anywhere; }
     .followup .meta { margin-bottom:12px; }
-    .topic-id { display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin:13px 0 0; color:var(--muted); font-size:12px; }
+    .topic-reference { margin:15px 0 0; color:var(--muted); font-size:12px; }
+    .topic-reference > summary { cursor:pointer; width:max-content; max-width:100%; color:var(--green); }
+    .topic-id { display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin:9px 0 0; color:var(--muted); font-size:12px; }
     .topic-id code { color:#444; }
     .copy-id { padding:4px 9px; border:1px solid #d6dfca; background:#edf1e5; border-radius:5px; color:#4b654a; font:inherit; cursor:pointer; }
     .copy-id:hover { background:#e4ecd8; }
@@ -82,8 +87,12 @@
     .footer-source { text-align:right; }
     .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
     [hidden] { display:none!important; }
+    @media(max-width:1100px) {
+      .toolbar { grid-template-columns:minmax(0,1fr) 167px; }
+      .toolbar .date-field { grid-row:2; }
+    }
     @media(max-width:860px) {
-      .archive-layout { grid-template-columns:minmax(0,1fr) 220px; gap:16px; }
+      .archive-layout { grid-template-columns:210px minmax(0,1fr); gap:16px; }
       .shell { padding:0 20px; }
       .quick-nav { padding:14px 8px 12px 12px; }
     }
@@ -106,24 +115,27 @@
 <body>
   <div class="shell">
     <header>
-      <a class="brand" href="./">QOTD <span class="brand-accent">Archive</span></a>
+      <a class="brand" href="./">EBS</a>
       <nav aria-label="Site navigation">
-        <a href="https://github.com/The-Aries/qotd-archive/issues/new?template=qotd.yml" target="_blank" rel="noopener noreferrer">Add a question</a>
-        <a href="https://github.com/The-Aries/qotd-archive" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://github.com/The-Aries/question-of-the-day-in-ebs/issues/new?template=qotd.yml" target="_blank" rel="noopener noreferrer">Add a question</a>
+        <a href="https://github.com/The-Aries/question-of-the-day-in-ebs" target="_blank" rel="noopener noreferrer">GitHub</a>
       </nav>
     </header>
     <main>
       <section class="hero" aria-labelledby="page-title">
-        <p class="eyebrow">The community archive</p>
-        <h1 id="page-title">Question of the Day</h1>
-        <p class="lede">Community questions, choices and observed poll results.</p>
+        <h1 id="page-title">Question of the Day in EBS</h1>
         <div class="stats">
-          <div class="stat"><strong id="published-count">—</strong><span>topics</span></div>
-          <div class="stat"><strong id="poll-count">—</strong><span>polls</span></div>
+          <div class="stat"><strong id="poll-count">—</strong><span>polls archived</span></div>
         </div>
       </section>
       <section class="archive" aria-labelledby="archive-title">
         <div class="archive-layout">
+          <aside class="quick-nav" aria-labelledby="quick-title">
+            <h2 id="quick-title">Quick navigation</h2>
+            <p class="quick-hint">Find a question by date</p>
+            <nav id="quick-links" class="quick-links" aria-label="Jump to question"></nav>
+            <p id="quick-empty" class="quick-empty" hidden>No matching questions.</p>
+          </aside>
           <div class="archive-main">
             <div class="section-top">
               <h2 id="archive-title">Questions</h2>
@@ -136,35 +148,25 @@
               </label>
               <label><span class="sr-only">Filter by voting type</span>
                 <select id="mode-select" aria-label="Voting type">
-                  <option value="all">All voting types</option>
+                  <option value="all">All questions</option>
                   <option value="single">Single choice</option>
                   <option value="multiple">Multiple choice</option>
-                  <option value="open">Text only</option>
-                  <option value="unknown">Unknown type</option>
                 </select>
               </label>
-            </div>
-            <div class="dates">
-              <label>From <input type="date" id="date-from" aria-label="From date"></label>
-              <label>To <input type="date" id="date-to" aria-label="To date"></label>
+              <label class="date-field">From <input type="date" id="date-from" aria-label="From date"></label>
+              <label class="date-field">To <input type="date" id="date-to" aria-label="To date"></label>
             </div>
             <div id="questions" class="question-list"></div>
             <p id="empty" class="empty" hidden>No matching questions.</p>
             <p id="load-error" class="empty" hidden>Archive unavailable. Refresh this page.</p>
           </div>
-          <aside class="quick-nav" aria-labelledby="quick-title">
-            <h2 id="quick-title">Quick navigation</h2>
-            <p class="quick-hint">Find a question by date</p>
-            <nav id="quick-links" class="quick-links" aria-label="Jump to question"></nav>
-            <p id="quick-empty" class="quick-empty" hidden>No matching questions.</p>
-          </aside>
         </div>
       </section>
     </main>
     <footer class="site-footer">
       <div>
-        <div class="footer-title">QOTD Archive</div>
-        <p>Created by <a href="https://github.com/The-Aries" target="_blank" rel="noopener noreferrer">The-Aries</a> · <a href="https://github.com/The-Aries/qotd-archive" target="_blank" rel="noopener noreferrer">GitHub repository</a></p>
+        <div class="footer-title">Question of the Day in EBS</div>
+        <p>Created by <a href="https://github.com/The-Aries" target="_blank" rel="noopener noreferrer">The-Aries</a> · <a href="https://github.com/The-Aries/question-of-the-day-in-ebs" target="_blank" rel="noopener noreferrer">GitHub repository</a></p>
       </div>
       <div class="footer-source">
         <div class="footer-title">Data source</div>
