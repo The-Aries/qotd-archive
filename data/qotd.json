@@ -15,12 +15,13 @@
       "anonymous": true,
       "multipleChoice": true,
       "participants": null,
+      "votesAsOf": "2026-11-07",
       "options": [
-        {"text": "Movies / TV shows / Streaming sites", "votes": null},
-        {"text": "Pirated / Cracked Software & Apps", "votes": null},
-        {"text": "Video games", "votes": null},
-        {"text": "Books / E-books / PDFs", "votes": null},
-        {"text": "Music / Audio", "votes": null},
+        {"text": "Movies / TV shows / Streaming sites", "votes": 39},
+        {"text": "Pirated / Cracked Software & Apps", "votes": 14},
+        {"text": "Video games", "votes": 14},
+        {"text": "Books / E-books / PDFs", "votes": 25},
+        {"text": "Music / Audio", "votes": 15},
         {"text": "Others", "votes": null},
         {"text": "Never (as far as I know)", "votes": null},
         {"text": "Not sure (begin to question my self)", "votes": null}

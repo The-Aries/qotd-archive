@@ -27,8 +27,10 @@ function card(r) {
   article.append(main);
   if (r.options.length === 0) return article;
   const details = element("details", "detail");
-  const verified = r.options.length > 0 && r.options.every((o) => Number.isInteger(o.votes));
-  details.append(element("summary", "", verified ? "View verified results" : "View answer choices"));
+  const known = r.options.filter((o) => Number.isInteger(o.votes)).length;
+  const verified = known === r.options.length;
+  const title = verified ? "View observed results" : known > 0 ? "View partial results" : "View answer choices";
+  details.append(element("summary", "", title));
   const list = element("ol", "options");
   const max = verified ? Math.max(1, ...r.options.map((o) => o.votes)) : 1;
   for (const o of r.options) {
@@ -42,12 +44,15 @@ function card(r) {
       bar.append(fill);
       body.append(bar);
     }
-    item.append(body, element("span", "votes", verified ? o.votes + " votes" : "Pending verification"));
+    item.append(body, element("span", "votes", Number.isInteger(o.votes) ? o.votes + " votes" : "Not verified"));
     list.append(item);
   }
-  details.append(list, element("p", "footnote", verified
-    ? "Aggregated votes only. Multiple-choice vote totals can exceed participant counts."
-    : "No unverified counts or percentages are displayed."));
+  const observation = r.votesAsOf ? "Observed " + r.votesAsOf + " (Europe/Berlin). Counts can change. " : "";
+  details.append(list, element("p", "footnote", observation +
+    (verified
+      ? "Aggregate votes only. Multiple-choice totals may exceed participant counts."
+      : known > 0 ? "Some counts could not be read; unknown does not mean zero."
+      : "No unverified counts or percentages are displayed.")));
   article.append(details);
   return article;
 }

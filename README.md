@@ -13,6 +13,7 @@ Open: http://localhost:8000/
 ## Updating questions
 
 Edit data/qotd.json. Keep dates in Europe/Berlin local time. Publish only verified questions, answer choices and aggregated results. Unverified vote counts remain null, never zero.
+For partial results, enter only independently observed option counts and set votesAsOf to the date they were checked; all unknown counts remain null. The website labels partial observations and never treats null as zero.
 Open-ended QOTDs without poll options are also in scope; represent them with an empty options array. Do not assume that only the repository owner's posts qualify.
 
 For a local, read-only inventory on a Mac with WhatsApp installed, run:
