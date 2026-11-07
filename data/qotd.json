@@ -47,6 +47,17 @@
       "multipleChoice": false,
       "participants": null,
       "options": []
+    },
+    {
+      "id": "2026-02-19-finding-people-in-group",
+      "date": "2026-02-19",
+      "category": "Community & Environment",
+      "question": "Have you ever asked a question in the group looking for one specific person? If so, have you actually found the person or gotten help with your problem?",
+      "description": "Examples included asking someone to empty a washing machine or identify who took a parcel. General requests for help were excluded. Discussion replies have not yet been reviewed.",
+      "anonymous": false,
+      "multipleChoice": false,
+      "participants": null,
+      "options": []
     }
   ]
 }

@@ -21,6 +21,8 @@ For a local, read-only inventory on a Mac with WhatsApp installed, run:
 
 The group-wide inventory, including polls authored by other group members and text messages mentioning QOTD, is written under private/ and excluded from Git. WhatsApp poll message type 46 was observed in this installation in November 2026; it is not a documented public API. This count is **all group polls**, not necessarily QOTDs, and text-only QOTDs can also exist.
 
+To inspect the original poll content, use WhatsApp on macOS: open the target group, choose the Polls filter, select a poll in the results list, and read the original poll card. Keep any screenshots and working notes under the ignored private/ directory. Do not invent unavailable counts.
+
 ## Data protection
 
 Do not commit group messages, participant identities, phone numbers, raw chat exports or database records. Poll-message count is not necessarily the number of unique QOTDs; split and unrelated polls require manual review.
