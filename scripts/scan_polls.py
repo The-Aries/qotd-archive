@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""List potential WhatsApp poll records without modifying a live database."""
+"""Inventory group-wide WhatsApp poll and text QOTD candidates, read-only."""
 import argparse
 import json
 import sqlite3
@@ -28,29 +28,56 @@ def main():
     if len(chats) != 1:
         raise SystemExit(f"Expected one matching chat, found {len(chats)}. Use a more specific --chat.")
     rows = con.execute(
-        """SELECT m.Z_PK, m.ZMESSAGEDATE
+        """SELECT m.Z_PK, m.ZMESSAGEDATE, m.ZISFROMME
            FROM ZWAMESSAGE m
-           WHERE m.ZCHATSESSION = ? AND m.ZISFROMME = 1 AND m.ZMESSAGETYPE = 46
+           WHERE m.ZCHATSESSION = ? AND m.ZMESSAGETYPE = 46
+           ORDER BY m.ZMESSAGEDATE DESC""",
+        (chats[0][0],),
+    ).fetchall()
+    text_rows = con.execute(
+        """SELECT m.Z_PK, m.ZMESSAGEDATE, m.ZISFROMME
+           FROM ZWAMESSAGE m
+           WHERE m.ZCHATSESSION = ?
+             AND (LOWER(m.ZTEXT) LIKE '%qotd%'
+               OR LOWER(m.ZTEXT) LIKE '%question of the day%')
            ORDER BY m.ZMESSAGEDATE DESC""",
         (chats[0][0],),
     ).fetchall()
     con.close()
     tz = ZoneInfo("Europe/Berlin")
-    records = [
+    def describe(rows):
+        return [
         {
             "localDateTime": (EPOCH + timedelta(seconds=t)).astimezone(tz).isoformat(timespec="seconds"),
             "localRecordId": key,
+            "isFromThisAccount": bool(own),
             "reviewStatus": "unverified"
         }
-        for key, t in rows
-    ]
+        for key, t, own in rows
+        ]
+
+    records = describe(rows)
+    text_candidates = describe(text_rows)
+    from_this_account = sum(r["isFromThisAccount"] for r in records)
+    dates = len(set(r["localDateTime"][:10] for r in records))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
-        json.dumps({"candidatePollCount": len(records), "records": records}, indent=2, ensure_ascii=False) + "\n",
+        json.dumps({
+            "candidatePollCount": len(records),
+            "fromThisAccount": from_this_account,
+            "fromOtherAccounts": len(records) - from_this_account,
+            "distinctPollDates": dates,
+            "keywordTextMessageCount": len(text_candidates),
+            "pollRecords": records,
+            "keywordTextRecords": text_candidates
+        }, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
-    print("Candidate poll messages authored by this account:", len(records))
-    print("Distinct calendar dates:", len(set(r["localDateTime"][:10] for r in records)))
+    print("Group-wide candidate poll messages:", len(records))
+    print("From this account:", from_this_account)
+    print("From other accounts:", len(records) - from_this_account)
+    print("Distinct calendar dates with polls:", dates)
+    print("QOTD keyword text messages (may overlap with polls):", len(text_candidates))
     print("Private inventory:", args.output)
     print("Not a verified count of distinct Questions of the Day.")
 

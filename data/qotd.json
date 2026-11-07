@@ -1,9 +1,9 @@
 {
   "meta": {
     "timezone": "Europe/Berlin",
-    "identifiedOwnPollMessages": 13,
+    "identifiedGroupPollMessages": 38,
     "inventoryCheckedOn": "2026-11-07",
-    "coverageNote": "Work in progress. 13 poll messages authored by the archive owner were located in the local group database. This is not a confirmed number of distinct QOTDs. Only independently verified questions appear below."
+    "coverageNote": "Work in progress. 38 poll messages by all group members were located in the local EBS-Socializing chat database (13 by the archive owner and 25 by others). Some polls may not be QOTDs, and some QOTDs may be text-only. This is not a confirmed count of distinct QOTDs. Only independently verified questions appear below."
   },
   "questions": [
     {
@@ -25,6 +25,28 @@
         {"text": "Never (as far as I know)", "votes": null},
         {"text": "Not sure (begin to question my self)", "votes": null}
       ]
+    },
+    {
+      "id": "2026-06-25-summer-without-ac",
+      "date": "2026-06-25",
+      "category": "Everyday Life",
+      "question": "What is your redneck engineering tip for surviving German summer without AC?",
+      "description": "An open-ended Question of the Day from another group member. Individual replies are not published.",
+      "anonymous": false,
+      "multipleChoice": false,
+      "participants": null,
+      "options": []
+    },
+    {
+      "id": "2026-02-24-mailbox-flyers",
+      "date": "2026-02-24",
+      "category": "Community & Environment",
+      "question": "So should we ban flyers to reduce waste, or allow them to support small businesses?",
+      "description": "Discussion about mailbox flyers, unnecessary waste, and the need for small local businesses to advertise. Individual replies are not published.",
+      "anonymous": false,
+      "multipleChoice": false,
+      "participants": null,
+      "options": []
     }
   ]
 }

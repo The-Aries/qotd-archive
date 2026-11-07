@@ -13,12 +13,13 @@ Open: http://localhost:8000/
 ## Updating questions
 
 Edit data/qotd.json. Keep dates in Europe/Berlin local time. Publish only verified questions, answer choices and aggregated results. Unverified vote counts remain null, never zero.
+Open-ended QOTDs without poll options are also in scope; represent them with an empty options array. Do not assume that only the repository owner's posts qualify.
 
 For a local, read-only inventory on a Mac with WhatsApp installed, run:
 
     python3 scripts/scan_polls.py --chat "EBS-Socializing"
 
-The inventory is written under private/ and is excluded from Git. WhatsApp poll message type 46 was observed in this installation in November 2026; it is not a documented public API.
+The group-wide inventory, including polls authored by other group members and text messages mentioning QOTD, is written under private/ and excluded from Git. WhatsApp poll message type 46 was observed in this installation in November 2026; it is not a documented public API. This count is **all group polls**, not necessarily QOTDs, and text-only QOTDs can also exist.
 
 ## Data protection
 

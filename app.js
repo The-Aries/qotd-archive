@@ -25,6 +25,7 @@ function card(r) {
   main.append(meta, element("h3", "", r.question));
   if (r.description) main.append(element("p", "description", r.description));
   article.append(main);
+  if (r.options.length === 0) return article;
   const details = element("details", "detail");
   const verified = r.options.length > 0 && r.options.every((o) => Number.isInteger(o.votes));
   details.append(element("summary", "", verified ? "View verified results" : "View answer choices"));
@@ -68,7 +69,7 @@ async function start() {
     state.records = data.questions.sort((a,b) => b.date.localeCompare(a.date));
     const topics = [...new Set(state.records.map((r) => r.category))].sort();
     get("published-count").textContent = state.records.length;
-    get("poll-count").textContent = data.meta.identifiedOwnPollMessages ?? "—";
+    get("poll-count").textContent = data.meta.identifiedGroupPollMessages ?? "—";
     get("topic-count").textContent = topics.length;
     get("coverage-note").textContent = data.meta.coverageNote;
     for (const topic of topics) {
