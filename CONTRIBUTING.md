@@ -4,7 +4,7 @@ The quickest method is [the GitHub form](https://github.com/The-Aries/qotd-archi
 
 ## One question
 
-Fill in the date and full text. Choose a category and **Single choice**, **Multiple choices**, **Not sure**, or **Open-ended**. If you know the number of unique people who voted, enter it; otherwise leave it blank.
+Fill in the date and full text. Choose **Single choice**, **Multiple choices**, **Not sure**, or **Open-ended**. If you know the number of unique people who voted, enter it; otherwise leave it blank.
 
 In the **Choices and votes** box write, for example:
 
@@ -30,6 +30,6 @@ Include only the question, answer choices and aggregate vote totals. **Never inc
 
 ## For maintainers
 
-Each issue produces a single `entries/issue-<number>.json` file. Review its wording, date, voting mode, category, group relation and total counts. Confirm the source and privacy before merging. The build script then validates all IDs and Follow-up links. The deploy workflow regenerates the website automatically from the merged records.
+Each issue produces a single `entries/issue-<number>.json` file. Review its wording, date, voting mode, group relation and total counts. Confirm the source and privacy before merging. The build script then validates all IDs and Follow-up links. The deploy workflow regenerates the website automatically from the merged records.
 
 For historical curation, one record per poll is also allowed with `historic-<message ID>` keys. Unclassified polls should be reviewed, not added as confirmed QOTDs without evidence.

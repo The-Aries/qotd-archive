@@ -6,7 +6,7 @@ from scripts.build_archive import build_archive, validate_entry
 def record(id="issue-1", **overrides):
     r = {
         "id": id, "kind": "main", "parentId": None,
-        "date": "2026-11-07", "time": "20:10", "category": "Everyday Life",
+        "date": "2026-11-07", "time": "20:10",
         "question": "How many tabs?", "multipleChoice": False,
         "participants": None, "anonymous": True,
         "options": [{"text": "Few", "votes": 4}, {"text": "Many", "votes": 6}],

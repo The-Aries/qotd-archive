@@ -38,7 +38,7 @@ def validate_entry(item):
     time = item.get("time", "")
     if not isinstance(time, str) or (time and not TIME_PATTERN.fullmatch(time)):
         raise ValueError(f"{entry_id}: invalid time")
-    for field, limit in (("question", 1500), ("category", 64)):
+    for field, limit in (("question", 1500),):
         value = item.get(field)
         if not isinstance(value, str) or not value.strip() or len(value) > limit:
             raise ValueError(f"{entry_id}: invalid {field}")
@@ -73,7 +73,7 @@ def validate_entry(item):
 
 def _present(item):
     result = {key: item.get(key) for key in (
-        "id", "date", "time", "category", "question", "multipleChoice",
+        "id", "date", "time", "question", "multipleChoice",
         "anonymous", "notes"
     )}
     result["time"] = result["time"] or ""

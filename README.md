@@ -36,7 +36,7 @@ GitHub Issue Form -> validation -> one JSON file + PR
 - Source of truth: `entries/*.json` (one entry per original poll or text-only question).
 - Main entries have `kind: "main"`; Follow-ups have `kind: "followup"` and a `parentId`.
 - The builder (`scripts/build_archive.py`) groups related entries and generates `data/qotd.json`. This JSON is a **build artifact**, not the source of truth.
-- Each question opens as a collapsed card. Users can search, filter by category/type/date and view each option's aggregated vote count.
+- Each question opens as a collapsed card. Users can search, filter by voting mode/date, use the side navigation list, and view each option's aggregated vote count.
 - A single-choice poll with complete counts can infer its participant count as the total of the choice counts. Multi-choice polls never infer unique participants from vote totals. Unknown numbers stay unknown.
 
 ## Preview locally

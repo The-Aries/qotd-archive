@@ -19,10 +19,6 @@ _No response_
 
 20:05
 
-### Topic
-
-Technology
-
 ### Question
 
 What is your preferred browser?

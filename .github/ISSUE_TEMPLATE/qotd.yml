@@ -36,13 +36,6 @@ body:
       label: Time (HH:MM, optional)
       description: Local time in Europe/Berlin. Leave empty if unknown.
       placeholder: "20:00"
-  - type: dropdown
-    id: category
-    attributes:
-      label: Topic
-      options: [Campus, Everyday Life, Technology, Culture, Community, Other]
-    validations:
-      required: true
   - type: textarea
     id: question
     attributes:

@@ -1,5 +1,5 @@
 "use strict";
-const state = {records: [], topic: "all", mode: "all", search: "", from: "", to: ""};
+const state = {records: [], mode: "all", search: "", from: "", to: ""};
 const get = (id) => document.getElementById(id);
 
 function element(tag, className = "", value = null) {
@@ -107,7 +107,6 @@ function validEntry(entry, hasFollowups = false) {
   return entry && typeof entry.id === "string" &&
     /^\d{4}-\d{2}-\d{2}$/.test(entry.date) &&
     typeof entry.question === "string" &&
-    typeof entry.category === "string" &&
     (entry.multipleChoice === null || typeof entry.multipleChoice === "boolean") &&
     (entry.participants === null || (Number.isInteger(entry.participants) && entry.participants >= 0)) &&
     Array.isArray(entry.options) &&
@@ -118,7 +117,6 @@ function validEntry(entry, hasFollowups = false) {
 }
 
 function matches(entry) {
-  if (state.topic !== "all" && entry.category !== state.topic) return false;
   if (state.from && entry.date < state.from) return false;
   if (state.to && entry.date > state.to) return false;
   if (state.mode !== "all") {
@@ -127,16 +125,42 @@ function matches(entry) {
       entry.multipleChoice === false ? "single" : "unknown";
     if (mode !== state.mode) return false;
   }
-  const haystack = [entry.question, entry.category,
+  const haystack = [entry.question,
     ...entry.options.map(o => o.text),
     ...entry.followups.flatMap(f => [f.question, ...f.options.map(o => o.text)])
   ].join(" ").toLocaleLowerCase();
   return haystack.includes(state.search.trim().toLocaleLowerCase());
 }
 
+function renderNavigation(filtered) {
+  const items = [];
+  let currentMonth = "";
+  for (const entry of filtered) {
+    const month = new Intl.DateTimeFormat("en", {
+      year: "numeric", month: "long", timeZone: "UTC"
+    }).format(new Date(entry.date + "T12:00:00Z"));
+    if (month !== currentMonth) {
+      currentMonth = month;
+      items.push(element("div", "quick-month", month));
+    }
+    const link = element("a", "quick-link");
+    link.href = "#" + entry.id;
+    link.append(element("span", "quick-date", entry.date));
+    link.append(element("span", "quick-label", entry.question));
+    link.addEventListener("click", () => {
+      const target = document.getElementById(entry.id);
+      if (target) target.open = true;
+    });
+    items.push(link);
+  }
+  get("quick-links").replaceChildren(...items);
+  get("quick-empty").hidden = filtered.length > 0;
+}
+
 function render() {
   const filtered = state.records.filter(matches);
   get("questions").replaceChildren(...filtered.map(card));
+  renderNavigation(filtered);
   get("empty").hidden = filtered.length !== 0;
   get("result-count").textContent = filtered.length + " shown";
 }
@@ -149,16 +173,8 @@ async function start() {
     if (!Array.isArray(data.questions) || !data.questions.every(q => validEntry(q, true)))
       throw new Error("Invalid archive data");
     state.records = data.questions;
-    const topics = [...new Set(state.records.map(r => r.category))].sort();
     get("published-count").textContent = state.records.length;
     get("poll-count").textContent = data.meta.pollCount ?? "—";
-    get("topic-count").textContent = topics.length;
-    get("coverage-note").textContent = data.meta.coverageNote || "";
-    for (const topic of topics) {
-      const option = element("option", "", topic);
-      option.value = topic;
-      get("topic-select").append(option);
-    }
     render();
     if (window.location.hash) {
       const selected = document.getElementById(window.location.hash.slice(1));
@@ -175,7 +191,6 @@ async function start() {
 }
 
 get("search").addEventListener("input", e => {state.search = e.target.value; render();});
-get("topic-select").addEventListener("change", e => {state.topic = e.target.value; render();});
 get("mode-select").addEventListener("change", e => {state.mode = e.target.value; render();});
 get("date-from").addEventListener("change", e => {state.from = e.target.value; render();});
 get("date-to").addEventListener("change", e => {state.to = e.target.value; render();});
