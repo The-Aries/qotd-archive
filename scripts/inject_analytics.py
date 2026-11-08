@@ -8,14 +8,22 @@ from pathlib import Path
 
 BEACON_URL = "https://static.cloudflareinsights.com/beacon.min.js"
 TOKEN_PATTERN = re.compile(r"^[A-Za-z0-9_-]{16,128}$")
+SNIPPET_TOKEN_PATTERN = re.compile(
+    r"""["']token["']\s*:\s*["']([A-Za-z0-9_-]{16,128})["']"""
+)
 
 
-def configure(site_dir: Path, token: str) -> bool:
-    """Return False when no Cloudflare site token has been configured."""
-    if not token:
+def configure(site_dir: Path, setting: str) -> bool:
+    """Enable analytics with either a site token or Cloudflare's full snippet."""
+    if not setting:
         return False
-    if not TOKEN_PATTERN.fullmatch(token):
-        raise ValueError("Invalid Cloudflare Web Analytics site token")
+    if TOKEN_PATTERN.fullmatch(setting):
+        token = setting
+    else:
+        matches = SNIPPET_TOKEN_PATTERN.findall(setting) if BEACON_URL in setting else []
+        if len(matches) != 1:
+            raise ValueError("Invalid Cloudflare Web Analytics site token or snippet")
+        token = matches[0]
 
     snippet = (
         f'<script type="module" defer src="{BEACON_URL}" '

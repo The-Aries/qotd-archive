@@ -28,8 +28,24 @@ class AnalyticsTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             configure(self.site, "0123456789abcdef0123456789abcdef")
 
+    def test_accepts_official_cloudflare_snippet(self):
+        snippet = (
+            "<!-- Cloudflare Web Analytics --><script type='module' "
+            "src='https://static.cloudflareinsights.com/beacon.min.js' "
+            "data-cf-beacon='{\"token\": \"0123456789abcdef0123456789abcdef\"}'"
+            "></script><!-- End Cloudflare Web Analytics -->"
+        )
+        self.assertTrue(configure(self.site, snippet))
+        for name in ("index.html", "add.html"):
+            html = (self.site / name).read_text()
+            self.assertEqual(html.count(BEACON_URL), 1)
+            self.assertNotIn("Cloudflare Web Analytics -->", html)
+
     def test_invalid_tokens_rejected_without_changing_pages(self):
-        for token in ("bad", "evil\" onclick=alert(1)", "x" * 129):
+        for token in (
+            "bad", "evil\" onclick=alert(1)", "x" * 129,
+            "https://static.cloudflareinsights.com/beacon.min.js no token",
+        ):
             with self.assertRaises(ValueError):
                 configure(self.site, token)
         for name in ("index.html", "add.html"):

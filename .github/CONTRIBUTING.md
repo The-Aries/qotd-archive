@@ -40,6 +40,6 @@ Cloudflare Web Analytics is free and does not require a DNS or hosting change.
 In [Cloudflare Web Analytics](https://dash.cloudflare.com/?to=/:account/web-analytics),
 add the hostname `the-aries.github.io` for manual setup and copy the **site token**
 from its JavaScript snippet. Set GitHub Actions repository variable
-`CLOUDFLARE_WEB_ANALYTICS_TOKEN` to the token, then run
+`CLOUDFLARE_WEB_ANALYTICS_TOKEN` to the token **or the full snippet**, then run
 **Actions → Deploy QOTD archive → Run workflow**. The build adds the official beacon
 to the archive and submission pages. If the variable is empty, analytics stays disabled.
