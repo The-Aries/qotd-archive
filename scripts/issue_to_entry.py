@@ -13,10 +13,9 @@ HEADINGS = {
     "Date (YYYY-MM-DD)": "date",
     "Time (HH:MM, optional)": "time",
     "Question": "question",
-    "Voting mode": "mode",
-    "Participant count (optional)": "participants",
+    "Allow multiple answers? (Yes/No)": "mode",
     "Choices and votes": "options",
-    "Anonymous vote": "anonymous",
+    "Original poll anonymous? (Yes/No)": "anonymous",
     "Additional notes (optional)": "notes",
 }
 
@@ -30,9 +29,16 @@ def _parse_sections(body):
             raise ValueError(f"Duplicate form section: {title}")
         text = pieces[i + 1].strip()
         result[title] = "" if text in ("_No response_", "No response", "None") else text
-    if any(name not in result for name in HEADINGS):
-        raise ValueError("Submission does not match the QOTD Issue Form")
-    return {key: result[name] for name, key in HEADINGS.items()}
+    old_labels = {"mode": "Voting mode", "anonymous": "Anonymous vote"}
+    fields = {}
+    for label, key in HEADINGS.items():
+        actual_label = label if label in result else old_labels.get(key)
+        if actual_label not in result:
+            raise ValueError("Submission does not match the QOTD Issue Form")
+        fields[key] = result[actual_label]
+    # Previous submissions may still include the now-retired participants field.
+    fields["participants"] = result.get("Participant count (optional)", "")
+    return fields
 
 
 def _parse_choices(lines):
@@ -77,6 +83,8 @@ def issue_to_entry(issue):
     if kind is None:
         raise ValueError("Choose Main question or Follow-up")
     modes = {
+        "No": False,
+        "Yes": True,
         "Single choice": False,
         "Multiple choices": True,
         "Not sure": None,
@@ -104,7 +112,7 @@ def issue_to_entry(issue):
         "parentId": parent if kind == "followup" else None,
         "date": fields["date"], "time": fields["time"],
         "question": fields["question"],
-        "multipleChoice": modes[fields["mode"]],
+        "multipleChoice": modes[fields["mode"]] if options else None,
         "anonymous": anonymous[fields["anonymous"]],
         "participants": count, "options": options, "notes": fields["notes"],
     }

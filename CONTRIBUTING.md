@@ -1,6 +1,6 @@
 # Contributing a Question of the Day
 
-The quickest method is [the simple website form](https://the-aries.github.io/question-of-the-day-in-ebs/add.html). Every option has separate text and vote-count fields; click **+ Add option** for more. This prepares the existing GitHub issue form, which you review and submit. You do not need to know Git, JSON or programming.
+The quickest method is [the simple website form](https://the-aries.github.io/question-of-the-day-in-ebs/add.html). Every option has separate text and vote-count fields; click **+ Add option** for more. Choose whether multiple answers were allowed and whether the original poll was anonymous (both default to **No**). This prepares the existing GitHub issue form with your selections filled in, which you review and submit. You do not need to know Git, JSON or programming.
 
 ## One question
 

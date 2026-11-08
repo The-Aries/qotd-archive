@@ -22,7 +22,7 @@
     .inline-fields { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
     label { display:block; font-size:13px; font-weight:600; }
     label input, label textarea { margin-top:5px; }
-    input, textarea { width:100%; min-width:0; font:inherit; color:var(--ink); background:#fff; border:1px solid #cfcac0; border-radius:7px; padding:10px 11px; }
+    input, textarea, select { width:100%; min-width:0; font:inherit; color:var(--ink); background:#fff; border:1px solid #cfcac0; border-radius:7px; padding:10px 11px; }
     input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible { outline:2px solid var(--green); outline-offset:2px; }
     textarea { resize:vertical; min-height:88px; }
     .hint { display:block; font-size:12px; font-weight:400; color:var(--muted); margin-top:4px; }
@@ -70,10 +70,20 @@
           <label>Question
             <textarea id="question" required maxlength="1500" placeholder="Type or paste the original question"></textarea>
           </label>
-          <label>Unique participants (optional)
-            <input id="participants" type="number" min="0" max="1000000" step="1" placeholder="Leave empty if unknown">
-            <span class="hint">For multiple-choice polls, do not add together the votes for each option.</span>
-          </label>
+          <div class="inline-fields">
+            <label>Allow multiple answers?
+              <select id="voting" aria-label="Allow multiple answers?">
+                <option value="No" selected>No — one answer per person</option>
+                <option value="Yes">Yes — multiple answers allowed</option>
+              </select>
+            </label>
+            <label>Was the original poll anonymous?
+              <select id="anonymous" aria-label="Was the original poll anonymous?">
+                <option value="No" selected>No — not anonymous</option>
+                <option value="Yes">Yes — anonymous</option>
+              </select>
+            </label>
+          </div>
         </div>
         <section class="options-section" aria-labelledby="options-title">
           <h2 id="options-title">Answer options and votes</h2>
@@ -86,7 +96,7 @@
           <a href="https://github.com/The-Aries/question-of-the-day-in-ebs/issues/new?template=qotd.yml">Use the original GitHub form</a>
         </div>
         <p id="form-error" class="message" role="alert" hidden></p>
-        <p class="note">On GitHub, confirm the question type, single/multiple choice, and anonymity before creating the issue. A pull request is prepared for review; nothing is published automatically.</p>
+        <p class="note">On GitHub, confirm the question and the automatically filled Yes/No choices before creating the issue. A pull request is prepared for review; nothing is published automatically.</p>
       </form>
     </main>
     <footer>Created by <a href="https://github.com/The-Aries">The-Aries</a> · <a href="https://github.com/The-Aries/question-of-the-day-in-ebs">GitHub Repository</a></footer>

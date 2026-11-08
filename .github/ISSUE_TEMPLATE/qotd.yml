@@ -44,19 +44,14 @@ body:
       placeholder: "What was your favorite ...?"
     validations:
       required: true
-  - type: dropdown
+  - type: input
     id: voting
     attributes:
-      label: Voting mode
-      options: [Single choice, Multiple choices, Not sure, Open-ended (no poll)]
+      label: Allow multiple answers? (Yes/No)
+      description: Enter Yes if participants could select more than one option. No is the default. For a text-only question, leave Choices and votes empty.
+      value: "No"
     validations:
       required: true
-  - type: input
-    id: participants
-    attributes:
-      label: Participant count (optional)
-      description: Unique voters, not the sum of multi-choice votes. Leave blank if not known.
-      placeholder: "42"
   - type: textarea
     id: choices
     attributes:
@@ -68,11 +63,12 @@ body:
         Other | ?
     validations:
       required: false
-  - type: dropdown
+  - type: input
     id: anonymous
     attributes:
-      label: Anonymous vote
-      options: [Not sure, "Yes", "No"]
+      label: Original poll anonymous? (Yes/No)
+      description: Enter Yes only if the original poll was anonymous. Default is No.
+      value: "No"
     validations:
       required: true
   - type: textarea

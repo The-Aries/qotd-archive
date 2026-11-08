@@ -10,7 +10,7 @@ A simple, searchable public archive of Questions of the Day and aggregated Whats
 
 1. Open **Add a question** on the website. Enter the original question and date.
 2. Add a row for each answer choice, with a separate field for its vote count. Use **+ Add option** to add rows. Leave the vote field empty if unknown. For a text-only question, leave all options empty.
-3. Select **Continue on GitHub**. Your question and choices will already be filled in. Choose the remaining GitHub dropdowns (main/follow-up, voting mode, anonymity), check the result and submit. The GitHub bot then prepares a **pull request** containing one small JSON file.
+3. Choose whether the poll allowed multiple answers and whether it was anonymous; both default to **No**. Select **Continue on GitHub**. The question, choices, votes and Yes/No selections are filled in. Choose the main/follow-up entry type, check the result and submit. The GitHub bot then prepares a **pull request** containing one small JSON file.
 4. A maintainer checks the information and merges the PR. The website then updates automatically.
 
 Follow-up questions: choose **Follow-up** in the form, and paste the parent topic ID (for example `historic-51770` or `issue-123`). Follow-ups are shown inside their main question's card, not as separate QOTDs.

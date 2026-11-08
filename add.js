@@ -72,12 +72,12 @@ function submissionUrl() {
   const question = document.getElementById("question").value.trim();
   if (!question) throw new Error("Enter the question.");
   const options = optionsToLines();
-  const participants = document.getElementById("participants").value;
   url.searchParams.set("title", "[QOTD] " + question.slice(0, 90));
   url.searchParams.set("date", document.getElementById("date").value);
   url.searchParams.set("question", question);
   if (options) url.searchParams.set("choices", options);
-  if (participants) url.searchParams.set("participants", participants);
+  url.searchParams.set("voting", document.getElementById("voting").value);
+  url.searchParams.set("anonymous", document.getElementById("anonymous").value);
   const time = document.getElementById("time").value;
   if (time) url.searchParams.set("time", time);
   if (url.toString().length > 7000) {

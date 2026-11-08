@@ -48,6 +48,27 @@ Sample poll
 
 
 class FormTests(unittest.TestCase):
+    def test_new_yes_no_fields_and_default_not_anonymous(self):
+        body = (BODY.replace("### Voting mode\n\nMultiple choices",
+                             "### Allow multiple answers? (Yes/No)\n\nYes")
+                    .replace("### Anonymous vote\n\nNot sure",
+                             "### Original poll anonymous? (Yes/No)\n\nNo")
+                    .replace("### Participant count (optional)\n\n_No response_\n\n", ""))
+        entry = issue_to_entry({"number": 128, "body": body})
+        self.assertTrue(entry["multipleChoice"])
+        self.assertFalse(entry["anonymous"])
+        self.assertIsNone(entry["participants"])
+
+    def test_new_single_choice_anonymous_yes(self):
+        body = (BODY.replace("### Voting mode\n\nMultiple choices",
+                             "### Allow multiple answers? (Yes/No)\n\nNo")
+                    .replace("### Anonymous vote\n\nNot sure",
+                             "### Original poll anonymous? (Yes/No)\n\nYes")
+                    .replace("### Participant count (optional)\n\n_No response_\n\n", ""))
+        entry = issue_to_entry({"number": 129, "body": body})
+        self.assertFalse(entry["multipleChoice"])
+        self.assertTrue(entry["anonymous"])
+
     def test_plain_issue_becomes_structured_record(self):
         entry = issue_to_entry({"number": 123, "body": BODY})
         self.assertEqual(entry["id"], "issue-123")
