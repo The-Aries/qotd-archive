@@ -20,3 +20,4 @@ jobs:
           python3 -m unittest discover -s tests -v
           python3 scripts/build_archive.py --output /tmp/qotd-validated.json
           node --check app.js
+          node --check add.js

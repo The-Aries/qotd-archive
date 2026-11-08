@@ -1,12 +1,12 @@
 # Contributing a Question of the Day
 
-The quickest method is [the GitHub form](https://github.com/The-Aries/question-of-the-day-in-ebs/issues/new?template=qotd.yml). You do not need to know Git, JSON or programming.
+The quickest method is [the simple website form](https://the-aries.github.io/question-of-the-day-in-ebs/add.html). Every option has separate text and vote-count fields; click **+ Add option** for more. This prepares the existing GitHub issue form, which you review and submit. You do not need to know Git, JSON or programming.
 
 ## One question
 
 Fill in the date and full text. Choose **Single choice**, **Multiple choices**, **Not sure**, or **Open-ended**. If you know the number of unique people who voted, enter it; otherwise leave it blank.
 
-In the **Choices and votes** box write, for example:
+If you prefer the [original GitHub form](https://github.com/The-Aries/question-of-the-day-in-ebs/issues/new?template=qotd.yml), enter the choices in the **Choices and votes** box, for example:
 
 ```text
 Yes | 24

@@ -80,6 +80,12 @@ class FormTests(unittest.TestCase):
             issue_to_entry({"number": 126, "body": BODY.replace(
                 "Firefox | 12", "Firefox | -12")})
 
+    def test_explicit_zero_and_unknown_votes(self):
+        entry = issue_to_entry({"number": 127, "body": BODY.replace(
+            "Firefox | 12", "Firefox | 0")})
+        self.assertEqual(entry["options"][0]["votes"], 0)
+        self.assertIsNone(entry["options"][-1]["votes"])
+
 
 if __name__ == "__main__":
     unittest.main()

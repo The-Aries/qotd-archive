@@ -4,18 +4,18 @@ A simple, searchable public archive of Questions of the Day and aggregated Whats
 
 **Website:** https://the-aries.github.io/question-of-the-day-in-ebs/
 
-**Add a new question:** [Fill in the GitHub form](https://github.com/The-Aries/question-of-the-day-in-ebs/issues/new?template=qotd.yml)
+**Add a new question:** [Use the simple submission form](https://the-aries.github.io/question-of-the-day-in-ebs/add.html) (or the [original GitHub form](https://github.com/The-Aries/question-of-the-day-in-ebs/issues/new?template=qotd.yml)).
 
 ## Add a question (no coding required)
 
-1. Open **Add a new question** and fill in the original question, date, voting mode and answer choices.
-2. Enter each choice on its own line as `Choice | number`. Use `?` if the vote count is unknown. For an open-ended question, leave the choices blank.
-3. Submit the form. The GitHub bot creates a **pull request** containing one small JSON file.
+1. Open **Add a question** on the website. Enter the original question and date.
+2. Add a row for each answer choice, with a separate field for its vote count. Use **+ Add option** to add rows. Leave the vote field empty if unknown. For a text-only question, leave all options empty.
+3. Select **Continue on GitHub**. Your question and choices will already be filled in. Choose the remaining GitHub dropdowns (main/follow-up, voting mode, anonymity), check the result and submit. The GitHub bot then prepares a **pull request** containing one small JSON file.
 4. A maintainer checks the information and merges the PR. The website then updates automatically.
 
 Follow-up questions: choose **Follow-up** in the form, and paste the parent topic ID (for example `historic-51770` or `issue-123`). Follow-ups are shown inside their main question's card, not as separate QOTDs.
 
-**No Git, code editor, CSV, Excel or Google account is necessary for contributors.** A free GitHub account is required to submit the form.
+**No Git, code editor, CSV, Excel or Google account is necessary for contributors.** A free GitHub account is required at the final review/submit step. The original GitHub form remains available as a fallback.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for examples and review guidance.
 
