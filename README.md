@@ -6,18 +6,39 @@ A simple, searchable public archive of Questions of the Day and aggregated Whats
 
 **Add a new question:** [Use the simple submission form](https://the-aries.github.io/question-of-the-day-in-ebs/add.html) (or the [original GitHub form](https://github.com/The-Aries/question-of-the-day-in-ebs/issues/new?template=qotd.yml)).
 
-## Add a question (no coding required)
+## How to use
+
+### Find a question
+
+Open the [website](https://the-aries.github.io/question-of-the-day-in-ebs/). Search by question or answer text, filter by voting type or date, or use the left-hand navigation. Expand a card to see its options and vote counts.
+
+### Add a question (no coding required)
 
 1. Open **Add a question** on the website. Enter the original question and date.
 2. Add a row for each answer choice, with a separate field for its vote count. Use **+ Add option** to add rows. Leave the vote field empty if unknown. For a text-only question, leave all options empty.
-3. Choose whether the poll allowed multiple answers and whether it was anonymous; both default to **No**. Select **Continue on GitHub**. The question, choices, votes and Yes/No selections are filled in. Check the result and submit. The GitHub bot then prepares a **pull request** containing one small JSON file.
+3. Choose whether the poll allowed multiple answers and whether it was anonymous; both default to **No**. Select **Continue on GitHub**. GitHub opens in a new tab with the details filled in. Check them and submit the Issue; the bot prepares a **pull request (PR)**.
 4. A maintainer checks the information and merges the PR. The website then updates automatically.
 
 WhatsApp polls split by the original app's option limit belong to one logical question on this website. Combine their answer choices before submitting.
 
 **No Git, code editor, CSV, Excel or Google account is necessary for contributors.** A free GitHub account is required at the final review/submit step. The original GitHub form remains available as a fallback.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for examples and review guidance.
+### Request a correction or deletion
+
+1. Expand the question card and click **Request to edit**.
+2. To correct it, edit the prefilled question, options or vote counts. To remove it, select **Request deletion instead of editing** and enter a reason.
+3. Click **Continue on GitHub** (or **Request deletion on GitHub**), check the prefilled Issue and submit it. The bot creates a PR for review; the live website stays unchanged until it is merged.
+
+GitHub opens in a separate tab, so you can return to the website without losing your place. A return link is also provided in the PR.
+
+### Review and publish (maintainers)
+
+1. Open the repository's [Pull requests](https://github.com/The-Aries/question-of-the-day-in-ebs/pulls) page.
+2. Read the proposed change under **Files changed**. Approve it, request corrections, or close the PR at your discretion.
+3. **Merge** an accepted PR into `main`. Approval alone does not publish it.
+4. GitHub Actions validates the records and deploys the website automatically. GitHub also deletes the merged PR's temporary branch.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for examples and further details.
 
 ## How it works
 
