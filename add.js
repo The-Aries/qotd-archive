@@ -6,6 +6,25 @@ const error = document.getElementById("form-error");
 const editId = new URLSearchParams(window.location.search).get("edit");
 let originalQuestion = null;
 let editingLoaded = !editId;
+const deleteToggle = document.getElementById("delete-instead");
+
+function updateRequestMode() {
+  const deleting = Boolean(editId && deleteToggle.checked);
+  document.getElementById("edit-fields").hidden = deleting;
+  document.getElementById("edit-options").hidden = deleting;
+  document.getElementById("deletion-reason-field").hidden = !deleting;
+  document.getElementById("deletion-reason").required = deleting;
+  for (const id of ["edit-fields", "edit-options"]) {
+    for (const control of document.getElementById(id).querySelectorAll("input,textarea,select,button")) {
+      control.disabled = deleting;
+    }
+  }
+  document.getElementById("question-form").classList.toggle("delete-mode", deleting);
+  document.getElementById("continue-button").textContent =
+    deleting ? "Request deletion on GitHub" : "Continue on GitHub";
+  document.getElementById("form-title").textContent =
+    deleting ? "Request deletion" : editId ? "Request to edit" : "Add a question";
+}
 
 function addOption(text = "", votes = "") {
   if (grid.children.length >= 50) return;
@@ -72,6 +91,16 @@ function optionsToLines() {
 function submissionUrl() {
   if (!editingLoaded) throw new Error("The selected question has not loaded.");
   const url = new URL(REPOSITORY + "/issues/new");
+  if (editId && deleteToggle.checked) {
+    const reason = document.getElementById("deletion-reason").value.trim();
+    if (!reason) throw new Error("Explain why the question should be deleted.");
+    url.searchParams.set("template", "delete.yml");
+    url.searchParams.set("title", "[Delete] " + originalQuestion.slice(0, 90));
+    url.searchParams.set("entry-id", editId);
+    url.searchParams.set("current-question", originalQuestion);
+    url.searchParams.set("reason", reason);
+    return url.toString();
+  }
   url.searchParams.set("template", editId ? "edit.yml" : "qotd.yml");
   const question = document.getElementById("question").value.trim();
   if (!question) throw new Error("Enter the question.");
@@ -109,13 +138,15 @@ document.getElementById("add-option").addEventListener("click", () => {
 addOption();
 addOption();
 if (editId) {
-  document.getElementById("form-title").textContent = "Edit question";
-  document.title = "Edit question — Question of the Day in EBS";
+  document.getElementById("form-title").textContent = "Request to edit";
+  document.title = "Request to edit — Question of the Day in EBS";
   document.getElementById("form-intro").textContent =
-    "Review the existing question and votes, correct anything necessary, then submit the proposed change for approval on GitHub.";
+    "Propose corrections to this question, or request its deletion. Both actions require review before the website changes.";
+  document.getElementById("delete-section").hidden = false;
   document.getElementById("edit-reason-field").hidden = false;
   document.getElementById("original-form-link").hidden = true;
   document.getElementById("continue-button").disabled = true;
+  deleteToggle.addEventListener("change", updateRequestMode);
   fetch("./data/qotd.json", {cache: "no-store"})
     .then(response => {
       if (!response.ok) throw new Error("Could not load archive data.");
@@ -137,6 +168,7 @@ if (editId) {
       if (!record.options.length) addOption();
       editingLoaded = true;
       document.getElementById("continue-button").disabled = false;
+      updateRequestMode();
     })
     .catch(reason => {
       error.textContent = reason.message;

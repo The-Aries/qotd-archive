@@ -47,30 +47,11 @@ function meta(entry) {
 }
 
 const REPOSITORY = "https://github.com/The-Aries/question-of-the-day-in-ebs";
-function reviewIssueUrl(template, entry) {
-  const url = new URL(REPOSITORY + "/issues/new");
-  url.searchParams.set("template", template + ".yml");
-  url.searchParams.set("entry-id", entry.id);
-  url.searchParams.set("current-question", entry.question);
-  return url.toString();
-}
-
 function cardActions(entry) {
   const actions = element("div", "card-actions");
-  const items = [
-    ["Report", reviewIssueUrl("report", entry)],
-    ["Edit", "./add.html?edit=" + encodeURIComponent(entry.id)],
-    ["Delete", reviewIssueUrl("delete", entry)],
-  ];
-  for (const [label, href] of items) {
-    const link = element("a", label === "Delete" ? "card-action action-delete" : "card-action", label);
-    link.href = href;
-    if (href.startsWith("https:")) {
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-    }
-    actions.append(link);
-  }
+  const link = element("a", "card-action", "Request to edit");
+  link.href = "./add.html?edit=" + encodeURIComponent(entry.id);
+  actions.append(link);
   return actions;
 }
 

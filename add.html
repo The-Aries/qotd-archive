@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Prepare a Question of the Day submission with separate fields for choices and vote counts.">
   <title>Add or edit a question — Question of the Day in EBS</title>
-  <link rel="icon" type="image/svg+xml" href="./logo.svg">
+  <link rel="icon" type="image/png" href="./logo.png">
   <style>
     :root { color-scheme:light; --paper:#fffaf0; --surface:#fff; --ink:#191919; --muted:#444; --line:#e9e2d5; --green:#365c43; }
     * { box-sizing:border-box; }
@@ -42,6 +42,13 @@
     .continue:hover { background:#274734; }
     .continue:disabled { opacity:.55; cursor:wait; }
     .message { font-size:13px; color:#9c3329; margin:12px 0 0; }
+    .deletion-choice { padding:14px 16px; margin-bottom:22px; border:1px solid var(--line); border-radius:8px; background:#fffaf0; }
+    .deletion-choice label { display:flex; align-items:center; gap:10px; font-size:14px; cursor:pointer; }
+    .deletion-choice input[type="checkbox"] { width:18px; height:18px; margin:0; accent-color:var(--green); flex:none; }
+    .deletion-reason { margin-top:12px; }
+    .deletion-reason textarea { display:block; }
+    .delete-mode .continue { background:#944235; }
+    .delete-mode .continue:hover { background:#7b352a; }
     .note { font-size:12px; color:var(--muted); margin:15px 0 0; }
     footer { border-top:1px solid var(--line); padding:18px 0 28px; font-size:12px; color:var(--muted); }
     [hidden] { display:none!important; }
@@ -58,14 +65,21 @@
 <body>
   <div class="shell">
     <header>
-      <a href="./" class="brand"><img src="./logo.svg" width="25" height="25" alt="">Question of the Day in EBS</a>
+      <a href="./" class="brand"><img src="./logo.png" width="25" height="25" alt="">Question of the Day in EBS</a>
       <a href="./">Back to questions</a>
     </header>
     <main>
       <h1 id="form-title">Add a question</h1>
       <p id="form-intro" class="intro">Enter the original question and poll results. You'll review everything on GitHub before submitting it for approval.</p>
       <form id="question-form">
-        <div class="fields">
+        <section id="delete-section" class="deletion-choice" hidden aria-label="Edit or delete this question">
+          <label><input type="checkbox" id="delete-instead">Request deletion instead of editing</label>
+          <span class="hint">Deleting a question requires a separate pull request and maintainer approval.</span>
+          <label class="deletion-reason" id="deletion-reason-field" hidden>Reason for deletion
+            <textarea id="deletion-reason" maxlength="1600" placeholder="Why should this question be deleted?"></textarea>
+          </label>
+        </section>
+        <div id="edit-fields" class="fields">
           <div class="inline-fields">
             <label>Date <input id="date" type="date" required></label>
             <label>Time (optional) <input id="time" type="time"></label>
@@ -91,7 +105,7 @@
             <textarea id="edit-reason" placeholder="What should be corrected, and why?"></textarea>
           </label>
         </div>
-        <section class="options-section" aria-labelledby="options-title">
+        <section id="edit-options" class="options-section" aria-labelledby="options-title">
           <h2 id="options-title">Answer options and votes</h2>
           <span class="hint">One option per row. Leave its vote count empty if unknown. For a text-only question, leave all options empty.</span>
           <div id="option-grid" class="option-grid"></div>

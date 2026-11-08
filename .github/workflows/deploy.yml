@@ -28,7 +28,7 @@ jobs:
           node --check app.js
           node --check add.js
           mkdir -p _site/data
-          cp index.html app.js add.html add.js logo.svg _site/
+          cp index.html app.js add.html add.js logo.png _site/
           python3 scripts/build_archive.py --output _site/data/qotd.json
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4

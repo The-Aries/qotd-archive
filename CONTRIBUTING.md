@@ -4,7 +4,7 @@ The quickest method is [the simple website form](https://the-aries.github.io/que
 
 ## One question
 
-Fill in the date and full text. Choose **Single choice**, **Multiple choices**, **Not sure**, or **Open-ended**. If you know the number of unique people who voted, enter it; otherwise leave it blank.
+Fill in the date and original question. Choose whether participants could select multiple answers and whether the original poll was anonymous. Both fields default to **No**.
 
 If you prefer the [original GitHub form](https://github.com/The-Aries/question-of-the-day-in-ebs/issues/new?template=qotd.yml), enter the choices in the **Choices and votes** box, for example:
 
@@ -18,10 +18,9 @@ Each line is one answer option. A question with no poll can leave the box blank.
 
 Submit the GitHub issue. The bot creates a new PR for review automatically. The reviewer can correct a mistake in the PR, request more information or decline it. Nothing appears on the site before merge.
 
-## Report, edit, or delete an existing question
+## Request an edit or deletion
 
-Expand a question on the website, then select **Report**, **Edit**, or **Delete**.
-Reports create a GitHub issue for a maintainer. Edits open the website form with the original question, options and aggregate votes already filled in. Deletion requests open a GitHub form containing the matching question ID. Both edits and deletions generate **reviewable PRs**, never direct site changes. A stale edit or deletion is rejected if the question has already been changed.
+Expand a question on the website and click **Request to edit**. The form opens with the question, options and aggregate votes prefilled. Submit your corrections to request an edit. To request removal instead, check **Request deletion instead of editing** and provide a reason. Both modes use GitHub Issue Forms to prepare **reviewable PRs**, never direct site changes. Stale edits and deletions are rejected if the original question has already changed.
 
 WhatsApp polls that were split due to option-count limits are presented as **one logical question**. Enter their options as one list; do not submit separate Follow-ups.
 
@@ -31,6 +30,6 @@ Include only the question, answer choices and aggregate vote totals. **Never inc
 
 ## For maintainers
 
-Each issue produces a single `entries/issue-<number>.json` file. Review its wording, date, voting mode, group relation and total counts. Confirm the source and privacy before merging. The build script then validates all IDs and Follow-up links. The deploy workflow regenerates the website automatically from the merged records.
+New submissions create an `entries/issue-<number>.json` file. Edits change one existing record; deletions remove one existing record. Review wording, date, voting mode, option-level counts and privacy before merging. The build script validates IDs and any existing parent references, then regenerates the website from merged records.
 
 For historical curation, one record per poll is also allowed with `historic-<message ID>` keys. Unclassified polls should be reviewed, not added as confirmed QOTDs without evidence.
