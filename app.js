@@ -247,6 +247,38 @@ async function start() {
       (min, entry) => entry.date < min ? entry.date : min,
       state.records[0]?.date || ""
     );
+    const earliest = get("earliest-record");
+    const earliestEntry = state.records.reduce(
+      (first, entry) =>
+        !first || [entry.date, entry.time || ""].join(" ") <
+                  [first.date, first.time || ""].join(" ") ? entry : first,
+      null
+    );
+    if (earliestEntry) {
+      const time = earliestEntry.time || "";
+      const zone = time ? new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Europe/Berlin", timeZoneName: "short"
+      }).formatToParts(new Date(earliestEntry.date + "T12:00:00Z"))
+        .find(part => part.type === "timeZoneName")?.value : "";
+      earliest.textContent = earliestEntry.date +
+        (time ? " " + time + " " + (zone || "Europe/Berlin") : "");
+      earliest.dateTime = earliestEntry.date + (time ? "T" + time : "");
+    } else {
+      earliest.textContent = "—";
+    }
+    const updated = get("last-updated");
+    const builtAt = data.meta?.lastUpdated;
+    const builtDate = typeof builtAt === "string" ? new Date(builtAt) : null;
+    if (builtDate && Number.isFinite(builtDate.getTime())) {
+      updated.dateTime = builtDate.toISOString();
+      updated.textContent = new Intl.DateTimeFormat("en-GB", {
+        year: "numeric", month: "short", day: "2-digit",
+        hour: "2-digit", minute: "2-digit", timeZone: "Europe/Berlin",
+        timeZoneName: "short"
+      }).format(builtDate);
+    } else {
+      updated.textContent = "—";
+    }
     syncDateLimits();
     get("poll-count").textContent = data.meta.questionCount ?? data.questions.length;
     render();

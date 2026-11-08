@@ -7,7 +7,7 @@ database is required. Called locally and in the Pages deployment workflow.
 import argparse
 import json
 import re
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 ID_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]{1,90}$")
@@ -165,6 +165,11 @@ def main():
         except (ValueError, KeyError, TypeError) as error:
             raise SystemExit(f"{filename}: {error}") from error
     output = build_archive(entries)
+    # Record when this generated website data was built, not the dates of its
+    # underlying WhatsApp polls. The build is the deploy's freshness marker.
+    output["meta"]["lastUpdated"] = (
+        datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n",
                            encoding="utf-8")
