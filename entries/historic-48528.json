@@ -6,7 +6,7 @@
   "time": "23:37",
   "question": "Question of the night: What’s the most accurate title for your life right now?",
   "multipleChoice": true,
-  "anonymous": null,
+  "anonymous": false,
   "participants": null,
   "options": [
     {
@@ -23,7 +23,7 @@
     },
     {
       "text": "D) How I Learned to Stop Caring and Love Caffeine",
-      "votes": 18
+      "votes": 17
     },
     {
       "text": "E) Any other, you can specify",
