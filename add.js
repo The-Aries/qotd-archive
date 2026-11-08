@@ -180,7 +180,14 @@ document.getElementById("question-form").addEventListener("submit", event => {
   error.hidden = true;
   if (!event.currentTarget.reportValidity()) return;
   try {
-    window.location.assign(submissionUrl());
+    const link = document.createElement("a");
+    link.href = submissionUrl();
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    document.body.append(link);
+    link.click();
+    link.remove();
+    document.getElementById("github-opened").hidden = false;
   } catch (reason) {
     error.textContent = reason.message;
     error.hidden = false;

@@ -35,6 +35,6 @@ jobs:
           git push origin "${branch}"
           gh pr create --repo "${REPOSITORY}" --base main --head "${branch}" \
             --title "Add QOTD from issue #${ISSUE_NUMBER}" \
-            --body "Generated from #${ISSUE_NUMBER}. Review the question, options, vote counts, privacy and Follow-up relation before merging. Closes #${ISSUE_NUMBER}."
+            --body "Generated from #${ISSUE_NUMBER}. Review the question, options, vote counts and privacy before merging. Closes #${ISSUE_NUMBER}. [Return to the QOTD website](https://the-aries.github.io/question-of-the-day-in-ebs/)."
           gh issue comment "${ISSUE_NUMBER}" --repo "${REPOSITORY}" \
-            --body "A pull request has been created for review. The website will not change until it is merged."
+            --body "A pull request has been created for review. The website will not change until it is merged. [Return to the QOTD website](https://the-aries.github.io/question-of-the-day-in-ebs/)."

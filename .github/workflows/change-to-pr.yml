@@ -51,6 +51,6 @@ jobs:
           git push origin "review/issue-${ISSUE_NUMBER}"
           gh pr create --repo "${REPOSITORY}" --base main --head "review/issue-${ISSUE_NUMBER}" \
             --title "Review QOTD edit/delete from issue #${ISSUE_NUMBER}" \
-            --body "Proposed edit or deletion from #${ISSUE_NUMBER}. Check the source, question text, choice-level vote counts, and privacy before merging. **Nothing is published before review.** Closes #${ISSUE_NUMBER}."
+            --body "Proposed edit or deletion from #${ISSUE_NUMBER}. Check the source, question text, choice-level vote counts, and privacy before merging. **Nothing is published before review.** Closes #${ISSUE_NUMBER}. [Return to the QOTD website](https://the-aries.github.io/question-of-the-day-in-ebs/)."
           gh issue comment "${ISSUE_NUMBER}" --repo "${REPOSITORY}" \
-            --body "A pull request is ready for review. This request does not change the website until the PR is merged."
+            --body "A pull request is ready for review. This request does not change the website until the PR is merged. [Return to the QOTD website](https://the-aries.github.io/question-of-the-day-in-ebs/)."
