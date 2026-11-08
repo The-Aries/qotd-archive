@@ -33,3 +33,13 @@ Include only the question, answer choices and aggregate vote totals. **Never inc
 New submissions create an `entries/issue-<number>.json` file. Edits change one existing record; deletions remove one existing record. Review wording, date, voting mode, option-level counts and privacy before merging. The build script validates IDs and any existing parent references, then regenerates the website from merged records.
 
 For historical curation, one record per poll is also allowed with `historic-<message ID>` keys. Unclassified polls should be reviewed, not added as confirmed QOTDs without evidence.
+
+## Optional website analytics (maintainers)
+
+Cloudflare Web Analytics is free and does not require a DNS or hosting change.
+In [Cloudflare Web Analytics](https://dash.cloudflare.com/?to=/:account/web-analytics),
+add the hostname `the-aries.github.io` for manual setup and copy the **site token**
+from its JavaScript snippet. Set GitHub Actions repository variable
+`CLOUDFLARE_WEB_ANALYTICS_TOKEN` to the token, then run
+**Actions → Deploy QOTD archive → Run workflow**. The build adds the official beacon
+to the archive and submission pages. If the variable is empty, analytics stays disabled.

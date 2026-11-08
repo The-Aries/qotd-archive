@@ -30,6 +30,10 @@ jobs:
           mkdir -p _site/data
           cp site/index.html site/app.js site/add.html site/add.js site/logo.png _site/
           python3 scripts/build_archive.py --output _site/data/qotd.json
+      - name: Configure optional Cloudflare Web Analytics
+        env:
+          CLOUDFLARE_WEB_ANALYTICS_TOKEN: ${{ vars.CLOUDFLARE_WEB_ANALYTICS_TOKEN }}
+        run: python3 scripts/inject_analytics.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:
