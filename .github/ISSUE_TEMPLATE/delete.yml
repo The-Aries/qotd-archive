@@ -1,0 +1,29 @@
+name: Request QOTD deletion
+description: Propose removing an incorrect or duplicate question. Requires PR review.
+title: "[Delete] "
+labels: [qotd-delete]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Deletion is **not immediate**. A bot prepares a pull request, and a maintainer reviews it before the question disappears.
+        Do not include participant names, phone numbers or individual voting records.
+  - type: input
+    id: entry-id
+    attributes:
+      label: Entry ID
+    validations:
+      required: true
+  - type: textarea
+    id: current-question
+    attributes:
+      label: Current question (verification)
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason for deletion
+      description: For example duplicate, not a QOTD, or incorrect source.
+    validations:
+      required: true

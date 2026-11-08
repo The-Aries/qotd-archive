@@ -3,6 +3,9 @@
 const REPOSITORY = "https://github.com/The-Aries/question-of-the-day-in-ebs";
 const grid = document.getElementById("option-grid");
 const error = document.getElementById("form-error");
+const editId = new URLSearchParams(window.location.search).get("edit");
+let originalQuestion = null;
+let editingLoaded = !editId;
 
 function addOption(text = "", votes = "") {
   if (grid.children.length >= 50) return;
@@ -67,12 +70,19 @@ function optionsToLines() {
 }
 
 function submissionUrl() {
+  if (!editingLoaded) throw new Error("The selected question has not loaded.");
   const url = new URL(REPOSITORY + "/issues/new");
-  url.searchParams.set("template", "qotd.yml");
+  url.searchParams.set("template", editId ? "edit.yml" : "qotd.yml");
   const question = document.getElementById("question").value.trim();
   if (!question) throw new Error("Enter the question.");
   const options = optionsToLines();
-  url.searchParams.set("title", "[QOTD] " + question.slice(0, 90));
+  url.searchParams.set("title", (editId ? "[Edit] " : "[QOTD] ") + question.slice(0, 90));
+  if (editId) {
+    url.searchParams.set("entry-id", editId);
+    url.searchParams.set("current-question", originalQuestion);
+    const reason = document.getElementById("edit-reason").value.trim();
+    if (reason) url.searchParams.set("reason", reason);
+  }
   url.searchParams.set("date", document.getElementById("date").value);
   url.searchParams.set("question", question);
   if (options) url.searchParams.set("choices", options);
@@ -98,6 +108,41 @@ document.getElementById("add-option").addEventListener("click", () => {
 });
 addOption();
 addOption();
+if (editId) {
+  document.getElementById("form-title").textContent = "Edit question";
+  document.title = "Edit question — Question of the Day in EBS";
+  document.getElementById("form-intro").textContent =
+    "Review the existing question and votes, correct anything necessary, then submit the proposed change for approval on GitHub.";
+  document.getElementById("edit-reason-field").hidden = false;
+  document.getElementById("original-form-link").hidden = true;
+  document.getElementById("continue-button").disabled = true;
+  fetch("./data/qotd.json", {cache: "no-store"})
+    .then(response => {
+      if (!response.ok) throw new Error("Could not load archive data.");
+      return response.json();
+    })
+    .then(data => {
+      const record = data.questions?.find(entry => entry.id === editId);
+      if (!record) throw new Error("This question does not exist. Refresh the archive.");
+      originalQuestion = record.question;
+      document.getElementById("date").value = record.date;
+      document.getElementById("time").value = record.time || "";
+      document.getElementById("question").value = record.question;
+      document.getElementById("voting").value = record.multipleChoice === true ? "Yes" : "No";
+      document.getElementById("anonymous").value = record.anonymous === true ? "Yes" : "No";
+      grid.replaceChildren();
+      for (const option of record.options) {
+        addOption(option.text, option.votes === null ? "" : String(option.votes));
+      }
+      if (!record.options.length) addOption();
+      editingLoaded = true;
+      document.getElementById("continue-button").disabled = false;
+    })
+    .catch(reason => {
+      error.textContent = reason.message;
+      error.hidden = false;
+    });
+}
 document.getElementById("question-form").addEventListener("submit", event => {
   event.preventDefault();
   error.hidden = true;

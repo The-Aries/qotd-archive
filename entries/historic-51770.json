@@ -56,7 +56,135 @@
     {
       "text": "No, because it's during the week",
       "votes": 8
+    },
+    {
+      "text": "No, because it's too expensive",
+      "votes": 5
+    },
+    {
+      "text": "No, because it's not enough people",
+      "votes": 1
+    },
+    {
+      "text": "Yes for some other reason",
+      "votes": 2
+    },
+    {
+      "text": "No for some other reason",
+      "votes": 3
+    },
+    {
+      "text": "Yes because i like the music",
+      "votes": 5
+    },
+    {
+      "text": "No because I dislike the music",
+      "votes": 7
     }
   ],
-  "notes": ""
+  "notes": "",
+  "sourcePolls": [
+    {
+      "id": "historic-51770",
+      "question": "Question of the Day: Uni party ticket sales are declining. Do you go to uni party's?",
+      "date": "2026-05-10",
+      "time": "23:45",
+      "multipleChoice": true,
+      "anonymous": null,
+      "options": [
+        {
+          "text": "Yes, because I identify with the Uni",
+          "votes": 5
+        },
+        {
+          "text": "Yes, because it's a good party",
+          "votes": 2
+        },
+        {
+          "text": "Yes because party's in a Uni are special",
+          "votes": 25
+        },
+        {
+          "text": "Yes, because my social circle goes",
+          "votes": 19
+        },
+        {
+          "text": "Yes, because it's cheap",
+          "votes": 8
+        },
+        {
+          "text": "Yes, because I like meeting other students",
+          "votes": 9
+        },
+        {
+          "text": "No, because I don't party in general",
+          "votes": 12
+        },
+        {
+          "text": "No, because I don't identify with the Uni",
+          "votes": 5
+        },
+        {
+          "text": "No, because its not good party",
+          "votes": 2
+        },
+        {
+          "text": "No, because I rather go to the city",
+          "votes": 1
+        },
+        {
+          "text": "No, because my social circle doesn't go",
+          "votes": 1
+        },
+        {
+          "text": "No, because it's during the week",
+          "votes": 8
+        }
+      ]
+    },
+    {
+      "id": "historic-51913",
+      "question": "Followup",
+      "date": "2026-05-10",
+      "time": "23:46",
+      "multipleChoice": true,
+      "anonymous": null,
+      "options": [
+        {
+          "text": "No, because it's too expensive",
+          "votes": 5
+        },
+        {
+          "text": "No, because it's not enough people",
+          "votes": 1
+        },
+        {
+          "text": "Yes for some other reason",
+          "votes": 2
+        },
+        {
+          "text": "No for some other reason",
+          "votes": 3
+        }
+      ]
+    },
+    {
+      "id": "historic-52051",
+      "question": "Followup 2",
+      "date": "2026-05-10",
+      "time": "23:48",
+      "multipleChoice": true,
+      "anonymous": null,
+      "options": [
+        {
+          "text": "Yes because i like the music",
+          "votes": 5
+        },
+        {
+          "text": "No because I dislike the music",
+          "votes": 7
+        }
+      ]
+    }
+  ]
 }

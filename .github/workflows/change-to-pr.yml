@@ -1,0 +1,56 @@
+name: QOTD edit or delete request to pull request
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  prepare:
+    if: contains(github.event.issue.labels.*.name, 'qotd-edit') || contains(github.event.issue.labels.*.name, 'qotd-delete')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ISSUE_NUMBER: ${{ github.event.issue.number }}
+      REPOSITORY: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create review branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git switch -c "review/issue-${ISSUE_NUMBER}"
+      - name: Prepare requested edit
+        if: contains(github.event.issue.labels.*.name, 'qotd-edit') && !contains(github.event.issue.labels.*.name, 'qotd-delete')
+        run: python3 -m scripts.change_entry "$GITHUB_EVENT_PATH" --mode edit
+      - name: Prepare requested deletion
+        if: contains(github.event.issue.labels.*.name, 'qotd-delete') && !contains(github.event.issue.labels.*.name, 'qotd-edit')
+        run: python3 -m scripts.change_entry "$GITHUB_EVENT_PATH" --mode delete
+      - name: Validate and create pull request
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ contains(github.event.issue.labels.*.name, 'qotd-edit') }}" == "true" && "${{ contains(github.event.issue.labels.*.name, 'qotd-delete') }}" == "true" ]]; then
+            echo "Ambiguous request: edit and delete labels cannot both apply."
+            exit 1
+          fi
+          python3 -m unittest discover -s tests
+          python3 scripts/build_archive.py --output /tmp/qotd-validated.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A entries/
+          if git diff --cached --quiet; then
+            echo "No requested change was made."
+            exit 1
+          fi
+          git commit -m "fix: review QOTD change from issue #${ISSUE_NUMBER}"
+          git push origin "review/issue-${ISSUE_NUMBER}"
+          gh pr create --repo "${REPOSITORY}" --base main --head "review/issue-${ISSUE_NUMBER}" \
+            --title "Review QOTD edit/delete from issue #${ISSUE_NUMBER}" \
+            --body "Proposed edit or deletion from #${ISSUE_NUMBER}. Check the source, question text, choice-level vote counts, and privacy before merging. **Nothing is published before review.** Closes #${ISSUE_NUMBER}."
+          gh issue comment "${ISSUE_NUMBER}" --repo "${REPOSITORY}" \
+            --body "A pull request is ready for review. This request does not change the website until the PR is merged."

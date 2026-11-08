@@ -18,11 +18,12 @@ Each line is one answer option. A question with no poll can leave the box blank.
 
 Submit the GitHub issue. The bot creates a new PR for review automatically. The reviewer can correct a mistake in the PR, request more information or decline it. Nothing appears on the site before merge.
 
-## Add a Follow-up
+## Report, edit, or delete an existing question
 
-Select **Follow-up** as entry type and enter the main question's record ID from the repository's `entries/` folder. Record IDs are internal and are no longer shown on the public website. If you are unsure which record is the parent, ask a maintainer before submitting.
+Expand a question on the website, then select **Report**, **Edit**, or **Delete**.
+Reports create a GitHub issue for a maintainer. Edits open the website form with the original question, options and aggregate votes already filled in. Deletion requests open a GitHub form containing the matching question ID. Both edits and deletions generate **reviewable PRs**, never direct site changes. A stale edit or deletion is rejected if the question has already been changed.
 
-Example: `historic-51770` is the Uni Party main question. A follow-up to that topic is displayed **under its main card**. Please submit main questions first and wait for their PR to merge before submitting their follow-ups.
+WhatsApp polls that were split due to option-count limits are presented as **one logical question**. Enter their options as one list; do not submit separate Follow-ups.
 
 ## Data and privacy
 

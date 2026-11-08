@@ -1,0 +1,31 @@
+name: Report a QOTD problem
+description: Flag a wrong question, option, vote count, or other problem for manual review.
+title: "[Report] "
+labels: [qotd-report]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This creates a report for a maintainer. It does not edit the website.
+        Do not include voter names, phone numbers or individual votes.
+  - type: input
+    id: entry-id
+    attributes:
+      label: Entry ID
+      description: Filled automatically when you use Report on a question card.
+    validations:
+      required: true
+  - type: textarea
+    id: current-question
+    attributes:
+      label: Current question
+      description: Identifies the question you are reporting.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong?
+      description: Explain the problem and the expected correction.
+    validations:
+      required: true

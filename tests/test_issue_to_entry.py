@@ -48,6 +48,20 @@ Sample poll
 
 
 class FormTests(unittest.TestCase):
+    def test_new_question_without_followup_fields(self):
+        body = (BODY.replace("### Entry type\n\nMain question\n\n", "")
+                    .replace("### Main topic ID (Follow-up only)\n\n_No response_\n\n", "")
+                    .replace("### Voting mode\n\nMultiple choices",
+                             "### Allow multiple answers? (Yes/No)\n\nYes")
+                    .replace("### Anonymous vote\n\nNot sure",
+                             "### Original poll anonymous? (Yes/No)\n\nNo")
+                    .replace("### Participant count (optional)\n\n_No response_\n\n", ""))
+        item = issue_to_entry({"number": 300, "body": body})
+        self.assertEqual(item["kind"], "main")
+        self.assertIsNone(item["parentId"])
+        self.assertTrue(item["multipleChoice"])
+        self.assertFalse(item["anonymous"])
+
     def test_new_yes_no_fields_and_default_not_anonymous(self):
         body = (BODY.replace("### Voting mode\n\nMultiple choices",
                              "### Allow multiple answers? (Yes/No)\n\nYes")

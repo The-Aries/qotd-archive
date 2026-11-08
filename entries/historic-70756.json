@@ -4,7 +4,7 @@
   "parentId": null,
   "date": "2026-11-04",
   "time": "12:05",
-  "question": "*Question of the Day*\n\nHave you heard of MBTI? If so, what's your personality type?\n\nYou can select multiple types if you've received different results over time.\n\nThe options are split into two polls because of WhatsApp's limit.\n\nPoll 1 — Introverts。",
+  "question": "Have you heard of MBTI? If so, what's your personality type? You can select multiple types if you've received different results over time.",
   "multipleChoice": true,
   "anonymous": null,
   "participants": null,
@@ -40,7 +40,149 @@
     {
       "text": "ISFP — Adventurer",
       "votes": 1
+    },
+    {
+      "text": "ENTJ — Commander",
+      "votes": 2
+    },
+    {
+      "text": "ENTP — Debater",
+      "votes": 4
+    },
+    {
+      "text": "ENFJ — Protagonist",
+      "votes": 1
+    },
+    {
+      "text": "ENFP — Campaigner",
+      "votes": 4
+    },
+    {
+      "text": "ESTJ — Executive",
+      "votes": 1
+    },
+    {
+      "text": "ESFJ — Consul",
+      "votes": 0
+    },
+    {
+      "text": "ESTP — Entrepreneur",
+      "votes": 0
+    },
+    {
+      "text": "ESFP — Entertainer",
+      "votes": 0
+    },
+    {
+      "text": "Never heard of MBTI",
+      "votes": 5
+    },
+    {
+      "text": "Familiar, but don't know my type",
+      "votes": 2
+    },
+    {
+      "text": "I have something to say",
+      "votes": 0
     }
   ],
-  "notes": ""
+  "notes": "",
+  "sourcePolls": [
+    {
+      "id": "historic-70756",
+      "question": "*Question of the Day*\n\nHave you heard of MBTI? If so, what's your personality type?\n\nYou can select multiple types if you've received different results over time.\n\nThe options are split into two polls because of WhatsApp's limit.\n\nPoll 1 — Introverts。",
+      "date": "2026-11-04",
+      "time": "12:05",
+      "multipleChoice": true,
+      "anonymous": null,
+      "options": [
+        {
+          "text": "INTJ — Architect",
+          "votes": 7
+        },
+        {
+          "text": "INTP — Logician",
+          "votes": 9
+        },
+        {
+          "text": "INFJ — Advocate",
+          "votes": 5
+        },
+        {
+          "text": "INFP — Mediator",
+          "votes": 0
+        },
+        {
+          "text": "ISTJ — Logistician",
+          "votes": 2
+        },
+        {
+          "text": "ISFJ — Defender",
+          "votes": 0
+        },
+        {
+          "text": "ISTP — Virtuoso",
+          "votes": 1
+        },
+        {
+          "text": "ISFP — Adventurer",
+          "votes": 1
+        }
+      ]
+    },
+    {
+      "id": "historic-70757",
+      "question": "Poll 2 — Extraverts",
+      "date": "2026-11-04",
+      "time": "12:06",
+      "multipleChoice": null,
+      "anonymous": null,
+      "options": [
+        {
+          "text": "ENTJ — Commander",
+          "votes": 2
+        },
+        {
+          "text": "ENTP — Debater",
+          "votes": 4
+        },
+        {
+          "text": "ENFJ — Protagonist",
+          "votes": 1
+        },
+        {
+          "text": "ENFP — Campaigner",
+          "votes": 4
+        },
+        {
+          "text": "ESTJ — Executive",
+          "votes": 1
+        },
+        {
+          "text": "ESFJ — Consul",
+          "votes": 0
+        },
+        {
+          "text": "ESTP — Entrepreneur",
+          "votes": 0
+        },
+        {
+          "text": "ESFP — Entertainer",
+          "votes": 0
+        },
+        {
+          "text": "Never heard of MBTI",
+          "votes": 5
+        },
+        {
+          "text": "Familiar, but don't know my type",
+          "votes": 2
+        },
+        {
+          "text": "I have something to say",
+          "votes": 0
+        }
+      ]
+    }
+  ]
 }

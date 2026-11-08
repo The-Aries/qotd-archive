@@ -1,4 +1,6 @@
 import unittest
+import json
+from pathlib import Path
 
 from scripts.build_archive import build_archive, validate_entry
 
@@ -26,11 +28,13 @@ class ArchiveTests(unittest.TestCase):
         data = build_archive([follow, parent])
         self.assertEqual(len(data["questions"]), 1)
         q = data["questions"][0]
-        self.assertEqual(q["participants"], 10)
-        self.assertEqual(q["participationSource"], "single-choice-total")
-        self.assertEqual(q["followups"][0]["id"], "issue-2")
-        self.assertIsNone(q["followups"][0]["participants"])
-        self.assertEqual(q["followups"][0]["multipleChoice"], True)
+        self.assertIsNone(q["participants"])
+        self.assertEqual(q["participationSource"], "unknown")
+        self.assertEqual(len(q["options"]), 4)
+        self.assertEqual([x["votes"] for x in q["options"]], [4, 6, 8, 6])
+        self.assertNotIn("followups", q)
+        self.assertEqual(data["meta"]["questionCount"], 1)
+        self.assertEqual(data["meta"]["sourcePollCount"], 2)
 
     def test_missing_parent_rejected(self):
         follow = record(kind="followup", parentId="issue-missing")
@@ -61,6 +65,21 @@ class ArchiveTests(unittest.TestCase):
                 record(), record("issue-2", kind="followup", parentId="issue-1"),
                 record("issue-3", kind="followup", parentId="issue-2"),
             ])
+
+    def test_historic_split_polls_are_one_record_each(self):
+        root = Path(__file__).resolve().parents[1] / "entries"
+        sources = {p.stem: json.loads(p.read_text(encoding="utf-8"))
+                   for p in root.glob("*.json")}
+        # Future reviewed deletions must not break the test suite.
+        for entry_id, source_count in (
+            ("historic-70756", 2),
+            ("historic-51770", 3),
+        ):
+            if entry_id in sources:
+                self.assertEqual(len(sources[entry_id]["sourcePolls"]), source_count)
+        data = build_archive(list(sources.values()))
+        self.assertEqual(data["meta"]["questionCount"], len(data["questions"]))
+        self.assertTrue(all("followups" not in x for x in data["questions"]))
 
 
 if __name__ == "__main__":

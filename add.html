@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Prepare a Question of the Day submission with separate fields for choices and vote counts.">
-  <title>Add a question — Question of the Day in EBS</title>
+  <title>Add or edit a question — Question of the Day in EBS</title>
+  <link rel="icon" type="image/svg+xml" href="./logo.svg">
   <style>
     :root { color-scheme:light; --paper:#fffaf0; --surface:#fff; --ink:#191919; --muted:#444; --line:#e9e2d5; --green:#365c43; }
     * { box-sizing:border-box; }
@@ -13,7 +14,8 @@
     header { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:21px 0; border-bottom:1px solid var(--line); }
     a { color:var(--green); text-decoration:none; }
     a:hover { text-decoration:underline; }
-    .brand { font-size:17px; font-weight:750; color:var(--ink); }
+    .brand { display:flex; align-items:center; gap:9px; font-size:17px; font-weight:750; color:var(--ink); }
+    .brand img { display:block; width:25px; height:25px; flex:none; }
     main { padding:34px 0 55px; }
     h1 { font-size:clamp(25px,4vw,32px); letter-spacing:-.03em; margin:0 0 6px; }
     .intro { margin:0 0 24px; color:var(--muted); font-size:14px; }
@@ -38,6 +40,7 @@
     .actions { display:flex; flex-wrap:wrap; gap:16px; align-items:center; margin-top:27px; padding-top:20px; border-top:1px solid var(--line); }
     .continue { border:0; background:var(--green); color:#fff; border-radius:7px; padding:11px 17px; font:inherit; font-weight:650; cursor:pointer; }
     .continue:hover { background:#274734; }
+    .continue:disabled { opacity:.55; cursor:wait; }
     .message { font-size:13px; color:#9c3329; margin:12px 0 0; }
     .note { font-size:12px; color:var(--muted); margin:15px 0 0; }
     footer { border-top:1px solid var(--line); padding:18px 0 28px; font-size:12px; color:var(--muted); }
@@ -55,12 +58,12 @@
 <body>
   <div class="shell">
     <header>
-      <a href="./" class="brand">Question of the Day in EBS</a>
+      <a href="./" class="brand"><img src="./logo.svg" width="25" height="25" alt="">Question of the Day in EBS</a>
       <a href="./">Back to questions</a>
     </header>
     <main>
-      <h1>Add a question</h1>
-      <p class="intro">Enter the original question and poll results. You'll review everything on GitHub before submitting it for approval.</p>
+      <h1 id="form-title">Add a question</h1>
+      <p id="form-intro" class="intro">Enter the original question and poll results. You'll review everything on GitHub before submitting it for approval.</p>
       <form id="question-form">
         <div class="fields">
           <div class="inline-fields">
@@ -84,6 +87,9 @@
               </select>
             </label>
           </div>
+          <label id="edit-reason-field" hidden>Reason for change (optional)
+            <textarea id="edit-reason" placeholder="What should be corrected, and why?"></textarea>
+          </label>
         </div>
         <section class="options-section" aria-labelledby="options-title">
           <h2 id="options-title">Answer options and votes</h2>
@@ -92,11 +98,11 @@
           <button type="button" id="add-option" class="add-option">+ Add option</button>
         </section>
         <div class="actions">
-          <button type="submit" class="continue">Continue on GitHub</button>
-          <a href="https://github.com/The-Aries/question-of-the-day-in-ebs/issues/new?template=qotd.yml">Use the original GitHub form</a>
+          <button id="continue-button" type="submit" class="continue">Continue on GitHub</button>
+          <a id="original-form-link" href="https://github.com/The-Aries/question-of-the-day-in-ebs/issues/new?template=qotd.yml">Use the original GitHub form</a>
         </div>
         <p id="form-error" class="message" role="alert" hidden></p>
-        <p class="note">On GitHub, confirm the question and the automatically filled Yes/No choices before creating the issue. A pull request is prepared for review; nothing is published automatically.</p>
+        <p class="note">On GitHub, confirm the question and options before submitting. A pull request is prepared for review; nothing is published automatically.</p>
       </form>
     </main>
     <footer>Created by <a href="https://github.com/The-Aries">The-Aries</a> · <a href="https://github.com/The-Aries/question-of-the-day-in-ebs">GitHub Repository</a></footer>

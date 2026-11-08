@@ -68,6 +68,14 @@ def validate_entry(item):
     notes = item.get("notes", "")
     if not isinstance(notes, str) or len(notes) > 2000:
         raise ValueError(f"{entry_id}: invalid notes")
+    source_polls = item.get("sourcePolls", [])
+    if not isinstance(source_polls, list):
+        raise ValueError(f"{entry_id}: invalid sourcePolls")
+    for poll in source_polls:
+        if not isinstance(poll, dict) or not isinstance(poll.get("id"), str):
+            raise ValueError(f"{entry_id}: invalid source poll")
+        if not isinstance(poll.get("question"), str) or not isinstance(poll.get("options"), list):
+            raise ValueError(f"{entry_id}: incomplete source poll")
     return item
 
 
@@ -104,23 +112,32 @@ def build_archive(entries):
     groups = {}
     for item in entries:
         if item["kind"] == "main":
-            groups[item["id"]] = {**_present(item), "followups": []}
+            groups[item["id"]] = _present(item)
     for item in entries:
         if item["kind"] != "followup":
             continue
         parent = lookup.get(item["parentId"])
         if not parent or parent["kind"] != "main":
             raise ValueError(f"{item['id']}: missing or invalid main question parent")
-        groups[item["parentId"]]["followups"].append(_present(item))
-    for group in groups.values():
-        group["followups"].sort(key=lambda r: (r["date"], r["time"], r["id"]))
+        group = groups[item["parentId"]]
+        # Handle legacy parent/child files as one logical question. Never sum
+        # votes for identically named answers: source polls are separate ballots.
+        group["options"].extend(_present(item)["options"])
+        group["participants"] = None
+        group["participationSource"] = "unknown"
     questions = sorted(groups.values(), key=lambda r: (
         r["date"], r["time"], r["id"]), reverse=True)
+    source_poll_count = sum(
+        len(item.get("sourcePolls", [])) or bool(item["options"])
+        for item in entries if item["kind"] == "main"
+    ) + sum(bool(item["options"]) for item in entries if item["kind"] == "followup")
     return {
         "meta": {
             "timezone": "Europe/Berlin",
             "topicCount": len(questions),
-            "pollCount": sum(bool(x["options"]) for x in entries),
+            "questionCount": len(questions),
+            "pollCount": sum(bool(q["options"]) for q in questions),
+            "sourcePollCount": source_poll_count,
             "entryCount": len(entries),
             "coverageNote": "Reviewed submissions only. Unknown values are not zero.",
         },

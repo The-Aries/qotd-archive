@@ -8,8 +8,6 @@ from pathlib import Path
 from scripts.build_archive import validate_entry
 
 HEADINGS = {
-    "Entry type": "kind",
-    "Main topic ID (Follow-up only)": "parent",
     "Date (YYYY-MM-DD)": "date",
     "Time (HH:MM, optional)": "time",
     "Question": "question",
@@ -38,6 +36,9 @@ def _parse_sections(body):
         fields[key] = result[actual_label]
     # Previous submissions may still include the now-retired participants field.
     fields["participants"] = result.get("Participant count (optional)", "")
+    # Legacy issues still carry the former follow-up fields.
+    fields["kind"] = result.get("Entry type", "Main question")
+    fields["parent"] = result.get("Main topic ID (Follow-up only)", "")
     return fields
 
 

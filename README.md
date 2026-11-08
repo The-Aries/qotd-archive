@@ -10,7 +10,7 @@ A simple, searchable public archive of Questions of the Day and aggregated Whats
 
 1. Open **Add a question** on the website. Enter the original question and date.
 2. Add a row for each answer choice, with a separate field for its vote count. Use **+ Add option** to add rows. Leave the vote field empty if unknown. For a text-only question, leave all options empty.
-3. Choose whether the poll allowed multiple answers and whether it was anonymous; both default to **No**. Select **Continue on GitHub**. The question, choices, votes and Yes/No selections are filled in. Choose the main/follow-up entry type, check the result and submit. The GitHub bot then prepares a **pull request** containing one small JSON file.
+3. Choose whether the poll allowed multiple answers and whether it was anonymous; both default to **No**. Select **Continue on GitHub**. The question, choices, votes and Yes/No selections are filled in. Check the result and submit. The GitHub bot then prepares a **pull request** containing one small JSON file.
 4. A maintainer checks the information and merges the PR. The website then updates automatically.
 
 Follow-up questions: choose **Follow-up** in the form, and paste the parent topic ID (for example `historic-51770` or `issue-123`). Follow-ups are shown inside their main question's card, not as separate QOTDs.
@@ -34,9 +34,9 @@ GitHub Issue Form -> validation -> one JSON file + PR
 ```
 
 - Source of truth: `entries/*.json` (one entry per original poll or text-only question).
-- Main entries have `kind: "main"`; Follow-ups have `kind: "followup"` and a `parentId`.
+- Each logical question is stored as one main record. WhatsApp polls split by the option limit are combined in the source record, with original source poll details retained in `sourcePolls` for auditing.
 - The builder (`scripts/build_archive.py`) groups related entries and generates `data/qotd.json`. This JSON is a **build artifact**, not the source of truth.
-- Each question opens as a collapsed card. Users can search, filter by voting mode/date, use the side navigation list, and view each option's aggregated vote count.
+- Each question opens as a collapsed card. Users can search, filter by voting mode/date, use the side navigation list, view each option's aggregated vote count and request **Report**, **Edit** or **Delete**.
 - A single-choice poll with complete counts can infer its participant count as the total of the choice counts. Multi-choice polls never infer unique participants from vote totals. Unknown numbers stay unknown.
 
 ## Preview locally
@@ -67,6 +67,6 @@ Do not merge unreviewed submissions. Do not post WhatsApp raw exports, screensho
 
 ## Historical data coverage
 
-The initial review identified 38 candidate poll messages in the EBS-Socializing chat. All 38 were reconstructed locally, but **eight do not have confirmed QOTD status**. Only 27 confirmed QOTD poll groups, their three nested follow-up/continuation polls, and one standalone text-only QOTD were selected for the initial public archive. The excluded candidates remain in the local private review and are not silently counted as QOTDs.
+The initial review identified 38 candidate poll messages in the EBS-Socializing chat. All 38 were reconstructed locally, but **eight do not have confirmed QOTD status**. Twenty-seven QOTD poll topics (including three original WhatsApp follow-up/continuation messages) and one text-only QOTD yield **28 logical questions**. The excluded candidates remain in the local private review.
 
 Privacy-sensitive local inventory and screenshot evidence stay in `private/`, which Git ignores. Any uncertainty in the source is shown as unknown rather than fabricated.

@@ -9,20 +9,7 @@ body:
         **No coding required.** Enter a question and its answer choices below.
         The bot will prepare a PR. Nothing appears on the website until a maintainer merges it.
         Do not include participant names, phone numbers or individual ballot records.
-        For an existing topic's follow-up, choose **Follow-up** and enter the parent entry ID from the repository's entries/ folder. Ask a maintainer for the ID if unsure.
-  - type: dropdown
-    id: entry-type
-    attributes:
-      label: Entry type
-      options: [Main question, Follow-up]
-    validations:
-      required: true
-  - type: input
-    id: parent
-    attributes:
-      label: Main topic ID (Follow-up only)
-      description: For example issue-123 or historic-51770. Leave empty for a main question.
-      placeholder: "issue-123"
+        Each submission creates one complete question; WhatsApp split polls should be combined into one set of answer choices.
   - type: input
     id: date
     attributes:

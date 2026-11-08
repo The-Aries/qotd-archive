@@ -1,0 +1,64 @@
+name: Edit an existing QOTD
+description: Propose a correction to the question, answer options or aggregate votes.
+title: "[Edit] "
+labels: [qotd-edit]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form creates a **reviewable pull request**, not a direct website change.
+        Use the Edit link on the question card to pre-fill the existing question and votes.
+        Do not include voter names, phone numbers or individual votes.
+  - type: input
+    id: entry-id
+    attributes:
+      label: Entry ID
+    validations:
+      required: true
+  - type: textarea
+    id: current-question
+    attributes:
+      label: Current question (verification)
+      description: Original question before editing. Used to prevent overwriting another correction.
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: Date (YYYY-MM-DD)
+    validations:
+      required: true
+  - type: input
+    id: time
+    attributes:
+      label: Time (HH:MM, optional)
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+    validations:
+      required: true
+  - type: input
+    id: voting
+    attributes:
+      label: Allow multiple answers? (Yes/No)
+      value: "No"
+    validations:
+      required: true
+  - type: textarea
+    id: choices
+    attributes:
+      label: Choices and votes
+      description: One option per line, for example Apple | 12. Use ? for unknown counts.
+  - type: input
+    id: anonymous
+    attributes:
+      label: Original poll anonymous? (Yes/No)
+      value: "No"
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason for change (optional)
+      description: Explain the source or the correction for the reviewer.

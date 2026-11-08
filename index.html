@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Question of the Day in EBS — community questions and poll results.">
   <title>Question of the Day in EBS</title>
+  <link rel="icon" type="image/svg+xml" href="./logo.svg">
   <style>
     :root { color-scheme: light; --ink:#191919; --muted:#444444; --line:#e9e2d5; --surface:#ffffff; --green:#365c43; --paper:#fffaf0; --header-height:80px; }
     * { box-sizing:border-box; }
@@ -13,7 +14,8 @@
     .shell { max-width:1380px; margin:0 auto; padding:0 20px; }
     a { color:inherit; }
     header { position:sticky; top:0; z-index:10; display:flex; justify-content:space-between; align-items:center; gap:22px; padding:19px 0; border-bottom:1px solid var(--line); background:var(--paper); }
-    .site-heading { display:flex; align-items:baseline; gap:18px; min-width:0; flex-wrap:wrap; }
+    .site-heading { display:flex; align-items:center; gap:12px; min-width:0; flex-wrap:wrap; }
+    .site-logo { display:block; flex:none; width:31px; height:31px; }
     h1 { font-size:clamp(20px,2.3vw,27px); line-height:1.25; letter-spacing:-.035em; margin:0; font-weight:750; }
     .poll-total { color:var(--muted); font-size:13px; white-space:nowrap; }
     .poll-total strong { color:var(--green); font-size:16px; margin-right:4px; }
@@ -62,6 +64,10 @@
     .followup { margin:18px 0 0; padding:17px 0 0; border-top:1px dashed var(--line); }
     .followup h3 { margin:0 0 7px; font-weight:600; font-size:14px; overflow-wrap:anywhere; }
     .followup .meta { margin-bottom:12px; }
+    .card-actions { display:flex; flex-wrap:wrap; gap:15px; border-top:1px solid var(--line); padding-top:14px; margin-top:15px; font-size:12px; }
+    .card-action { text-decoration:none; color:var(--green); font-weight:650; padding:4px 0; }
+    .card-action:hover { text-decoration:underline; }
+    .action-delete { color:#994237; }
     .quick-nav { position:sticky; top:calc(var(--header-height) + 16px); padding:10px 12px 12px 13px; border:1px solid var(--line); border-radius:11px; background:#fffdf8; }
     .quick-links { max-height:calc(100vh - var(--header-height) - 50px); overflow-y:auto; padding:0 5px 0 0; display:grid; gap:3px; align-content:start; scrollbar-color:#cfc5b1 transparent; }
     .quick-month { font-size:11px; font-weight:700; letter-spacing:.035em; color:var(--green); margin:13px 0 4px; }
@@ -108,8 +114,9 @@
   <div class="shell">
     <header id="site-header">
       <div class="site-heading">
+        <img class="site-logo" src="./logo.svg" width="31" height="31" alt="">
         <h1 id="page-title">Question of the Day in EBS</h1>
-        <span class="poll-total"><strong id="poll-count">—</strong> polls</span>
+        <span class="poll-total"><strong id="poll-count">—</strong> questions</span>
       </div>
       <nav aria-label="Site navigation">
         <a href="./add.html">Add a question</a>

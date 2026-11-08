@@ -36,16 +36,42 @@ function votesLabel(count) {
   return Number.isInteger(count) ? String(count) + " votes" : "Votes unknown";
 }
 
-function meta(entry, followupCount = 0) {
+function meta(entry) {
   const line = element("div", "meta");
   const dt = element("time", "", entry.date + (entry.time ? " · " + entry.time : ""));
   dt.dateTime = entry.date + (entry.time ? "T" + entry.time : "");
   line.append(dt);
   const choiceMode = entry.options.length ? labelForMode(entry) : null;
   if (choiceMode) line.append(element("span", "", choiceMode));
-  if (followupCount > 0) line.append(element("span", "", followupCount + " follow-up" +
-    (followupCount === 1 ? "" : "s")));
   return line;
+}
+
+const REPOSITORY = "https://github.com/The-Aries/question-of-the-day-in-ebs";
+function reviewIssueUrl(template, entry) {
+  const url = new URL(REPOSITORY + "/issues/new");
+  url.searchParams.set("template", template + ".yml");
+  url.searchParams.set("entry-id", entry.id);
+  url.searchParams.set("current-question", entry.question);
+  return url.toString();
+}
+
+function cardActions(entry) {
+  const actions = element("div", "card-actions");
+  const items = [
+    ["Report", reviewIssueUrl("report", entry)],
+    ["Edit", "./add.html?edit=" + encodeURIComponent(entry.id)],
+    ["Delete", reviewIssueUrl("delete", entry)],
+  ];
+  for (const [label, href] of items) {
+    const link = element("a", label === "Delete" ? "card-action action-delete" : "card-action", label);
+    link.href = href;
+    if (href.startsWith("https:")) {
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+    }
+    actions.append(link);
+  }
+  return actions;
 }
 
 function optionsView(entry) {
@@ -90,23 +116,17 @@ function card(entry) {
   });
   const summary = element("summary", "question-summary");
   const heading = element("span", "question-title", questionTitle(entry.question));
-  const small = meta(entry, entry.followups.length);
+  const small = meta(entry);
   summary.append(heading, small);
   card.append(summary);
   const interior = element("div", "question-expanded");
   interior.append(optionsView(entry));
-  for (let index = 0; index < entry.followups.length; index++) {
-    const child = entry.followups[index];
-    const section = element("section", "followup");
-    section.append(element("h3", "", "Follow-up " + (index + 1) + ": " + questionTitle(child.question)));
-    section.append(meta(child), optionsView(child));
-    interior.append(section);
-  }
+  interior.append(cardActions(entry));
   card.append(interior);
   return card;
 }
 
-function validEntry(entry, hasFollowups = false) {
+function validEntry(entry) {
   return entry && typeof entry.id === "string" &&
     /^\d{4}-\d{2}-\d{2}$/.test(entry.date) &&
     typeof entry.question === "string" &&
@@ -114,9 +134,7 @@ function validEntry(entry, hasFollowups = false) {
     (entry.participants === null || (Number.isInteger(entry.participants) && entry.participants >= 0)) &&
     Array.isArray(entry.options) &&
     entry.options.every(o => typeof o.text === "string" &&
-      (o.votes === null || (Number.isInteger(o.votes) && o.votes >= 0))) &&
-    (!hasFollowups || (Array.isArray(entry.followups) &&
-      entry.followups.every(x => validEntry(x, false))));
+      (o.votes === null || (Number.isInteger(o.votes) && o.votes >= 0)));
 }
 
 function matches(entry) {
@@ -129,8 +147,7 @@ function matches(entry) {
     if (mode !== state.mode) return false;
   }
   const haystack = [entry.question,
-    ...entry.options.map(o => o.text),
-    ...entry.followups.flatMap(f => [f.question, ...f.options.map(o => o.text)])
+    ...entry.options.map(o => o.text)
   ].join(" ").toLocaleLowerCase();
   return haystack.includes(state.search.trim().toLocaleLowerCase());
 }
@@ -242,7 +259,7 @@ async function start() {
     const response = await fetch("./data/qotd.json", {cache: "no-store"});
     if (!response.ok) throw new Error("HTTP " + response.status);
     const data = await response.json();
-    if (!Array.isArray(data.questions) || !data.questions.every(q => validEntry(q, true)))
+    if (!Array.isArray(data.questions) || !data.questions.every(validEntry))
       throw new Error("Invalid archive data");
     state.records = data.questions;
     state.minDate = state.records.reduce(
@@ -250,7 +267,7 @@ async function start() {
       state.records[0]?.date || ""
     );
     syncDateLimits();
-    get("poll-count").textContent = data.meta.pollCount ?? "—";
+    get("poll-count").textContent = data.meta.questionCount ?? data.questions.length;
     render();
     syncHeaderHeight();
     onPageScroll();
