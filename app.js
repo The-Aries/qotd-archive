@@ -85,8 +85,8 @@ function card(entry) {
       for (const other of document.querySelectorAll("details.question[open]")) {
         if (other !== card) other.open = false;
       }
+      selectQuestion(card.id);
     }
-    syncActiveNavigation(card.open ? card.id : null);
   });
   const summary = element("summary", "question-summary");
   const heading = element("span", "question-title", questionTitle(entry.question));
@@ -95,23 +95,6 @@ function card(entry) {
   card.append(summary);
   const interior = element("div", "question-expanded");
   interior.append(optionsView(entry));
-  const reference = element("details", "topic-reference");
-  reference.append(element("summary", "", "Reference for follow-up submissions"));
-  const identity = element("div", "topic-id");
-  const code = element("code", "", entry.id);
-  const copy = element("button", "copy-id", "Copy topic ID");
-  copy.type = "button";
-  copy.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(entry.id);
-      copy.textContent = "Copied";
-    } catch {
-      copy.textContent = "Select the ID to copy";
-    }
-  });
-  identity.append(element("span", "", "Topic ID: "), code, copy);
-  reference.append(identity);
-  interior.append(reference);
   for (let index = 0; index < entry.followups.length; index++) {
     const child = entry.followups[index];
     const section = element("section", "followup");
@@ -173,11 +156,12 @@ function renderNavigation(filtered) {
       const target = document.getElementById(entry.id);
       if (target) {
         target.open = true;
+        selectQuestion(entry.id);
         // An explicit jump avoids smooth-scroll and collapsing-card races.
         target.scrollIntoView({behavior: "instant", block: "start"});
         history.replaceState(null, "", "#" + entry.id);
       }
-      syncActiveNavigation(entry.id);
+      syncNavigationScroll();
     });
     items.push(link);
   }
@@ -194,38 +178,51 @@ function firstVisibleQuestionId() {
   return cards.length ? cards[cards.length - 1].id : null;
 }
 
-let activeNavigationId = null;
-function syncActiveNavigation(preferredId = null) {
-  const activeId = preferredId || firstVisibleQuestionId();
-  if (activeId === activeNavigationId) return;
-  activeNavigationId = activeId;
+let selectedQuestionId = null;
+function selectQuestion(id) {
+  selectedQuestionId = id;
   const links = get("quick-links");
-  let selected = null;
   for (const link of links.querySelectorAll(".quick-link")) {
-    const active = link.getAttribute("href") === "#" + activeId;
+    const active = link.getAttribute("href") === "#" + selectedQuestionId;
     link.classList.toggle("is-active", active);
     if (active) {
       link.setAttribute("aria-current", "location");
-      selected = link;
     }
     else link.removeAttribute("aria-current");
   }
-  if (selected) {
+}
+
+let visibleNavigationId = null;
+function syncNavigationScroll() {
+  // Scrolling the main page moves the sidebar only. It does not change
+  // which question the user explicitly selected.
+  const visibleId = firstVisibleQuestionId();
+  if (visibleId === visibleNavigationId) return;
+  visibleNavigationId = visibleId;
+  const links = get("quick-links");
+  const visibleLink = [...links.querySelectorAll(".quick-link")].find(
+    link => link.getAttribute("href") === "#" + visibleId
+  );
+  if (visibleLink) {
     const container = links.getBoundingClientRect();
-    const item = selected.getBoundingClientRect();
+    const item = visibleLink.getBoundingClientRect();
     // Keep the current main question near the top of the sidebar as both move.
-    // Only scroll this list: moving the selection must not move the document.
+    // Only scroll this list: moving the viewport must not change the highlight.
     const offset = item.top - container.top - 12;
     if (Math.abs(offset) > 7) links.scrollTop += offset;
   }
 }
 
 function render() {
-  activeNavigationId = null;
+  visibleNavigationId = null;
   const filtered = state.records.filter(matches);
+  if (!filtered.some(entry => entry.id === selectedQuestionId)) {
+    selectedQuestionId = filtered[0]?.id || null;
+  }
   get("questions").replaceChildren(...filtered.map(card));
   renderNavigation(filtered);
-  syncActiveNavigation();
+  selectQuestion(selectedQuestionId);
+  syncNavigationScroll();
   get("empty").hidden = filtered.length !== 0;
   get("result-count").textContent = filtered.length + " shown";
 }
@@ -237,7 +234,7 @@ function syncHeaderHeight() {
 
 function onPageScroll() {
   // The small static archive can update immediately, including in background tabs.
-  syncActiveNavigation();
+  syncNavigationScroll();
 }
 
 async function start() {

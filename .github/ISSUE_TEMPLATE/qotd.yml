@@ -9,7 +9,7 @@ body:
         **No coding required.** Enter a question and its answer choices below.
         The bot will prepare a PR. Nothing appears on the website until a maintainer merges it.
         Do not include participant names, phone numbers or individual ballot records.
-        To add a follow-up to an existing question, choose **Follow-up** and paste the main topic ID from its page.
+        For an existing topic's follow-up, choose **Follow-up** and enter the parent entry ID from the repository's entries/ folder. Ask a maintainer for the ID if unsure.
   - type: dropdown
     id: entry-type
     attributes:
