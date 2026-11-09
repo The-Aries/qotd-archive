@@ -1,0 +1,22 @@
+{
+  "id": "issue-6",
+  "kind": "main",
+  "parentId": null,
+  "date": "2026-11-08",
+  "time": "16:15",
+  "question": "Question of the day: Which movie will be more successful",
+  "multipleChoice": false,
+  "anonymous": false,
+  "participants": null,
+  "options": [
+    {
+      "text": "Dune 3",
+      "votes": 18
+    },
+    {
+      "text": "Avengers Doomsday",
+      "votes": 37
+    }
+  ],
+  "notes": ""
+}
